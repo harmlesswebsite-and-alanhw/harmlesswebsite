@@ -1,0 +1,43 @@
+<html id='stuff'>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title id='taitl'>Upgrade Options</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body id="baudy">
+    <h1>You know what I said about no rickrolling? I LIED!!!</h1>
+	  <button id="stoprickroll" onclick="stopRickroll();">Stop rickrolling once and for all</button><br></br>
+    <div id='ricky'></div>
+	  </div>
+	  <!-- See, stop overworking! -->
+    <div id="rickrollgifs"></div>
+	  <div id="lyrics" style='display: none;'></div>
+    <div id='exit'>
+    <button onclick='goto(1)'>Never mind, continue with free</button>
+    </div>
+	  <script src="script.js"></script>
+	  <figure style="display: none;">
+    <figcaption>RICK ROLLED!!!</figcaption>
+    <audio
+        style="display: none;" controls
+        src="RickRolled.mp3" id="rickroll">
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>
+</figure>
+	  <script>
+for (var i = 0; i < 32; i++) {
+document.querySelector('#rickrollgifs').innerHTML += "<img src='rickroll.gif' />";}
+		  for (var i = 0; i < 25; i++) {
+			  document.getElementById('lyrics').innerHTML += "NEVER GONNA GIVE YOU UP, LET YOU DOWN, RUN AROUND, AND POOP YOU. MAKE YOU CRY, SAY GOODBYE, TELL A LIE, AND POOP YOU. ";
+		  }
+		  function stopRickroll() {
+			  document.getElementById('rickroll').play(); document.getElementById('ricky').innerHTML = "<img style='width: 500px; height: 380px' src='RickWrongButton.png'>";
+        document.getElementById('exit').innerHTML = '';
+			  document.getElementById('taitl').innerHTML ='King Rick';
+        document.getElementById('lyrics').style.display = 'block';
+		  }
+	  </script>
+  </body>
+</html>
