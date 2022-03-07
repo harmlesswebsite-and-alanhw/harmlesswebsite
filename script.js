@@ -274,7 +274,7 @@ function goto(num) {
     <button onclick='document.getElementById("wordassociation").style.display = "block"; document.getElementById("start").style.display = "none"' id='start'>Start!</button>
     <div id = 'wordassociation' style='display: none;'>
       <h2 id='word'>poop</h2>
-      <input type='text' id='answer'> <button onclick = 'submitAssociation()' autocomplete=''>Submit</button>
+      <input type='text' id='answer'> <button onclick = 'submitAssociation()' autocomplete='off'>Submit</button>
     </div>`
     break;
       case 12:
