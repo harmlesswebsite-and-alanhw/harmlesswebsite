@@ -5,7 +5,9 @@ for (var i = 0; i < 4; i++) {
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
 }
-
+function write(text) {
+	document.getElementById('baudy').innerHTML = text;
+}
 var id = uuidv4();
 function goto(num) {
     switch (num) {
@@ -13,10 +15,7 @@ function goto(num) {
         // not run. Moving the injected script into
         // the HTML file.
         case 0:
-            document.getElementById("stuff").innerHTML = `<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Oh no I hate rickrolls</title>
+            document.getElementById('taitl').textContent = 'Oh no, I hate rickrolls'; document.getElementById("baudy").innerHTML = `
     ${'<link href="style.css" rel="stylesheet" type="text/css" /><style>iframe::before{display: block;content:"\00a0";width:100%;height:100%;position:relative;top:0px;left:0px;'}
 						 z-index:9999;background-color:red;}</style>
   </head>
@@ -46,10 +45,10 @@ function goto(num) {
         case -1:
             // document.write will trash the page.
             document.getElementById("baudy").innerHTML =
-                '<span onclick="goto(1)">Exactly what you were looking for.</span> <br><br><br><br><br><br><br><br><br><br>AHH how do I go back<br><br><br><br><br><br><br><br><br><br><span style="font-size: 8px;">Pro Tip: stuff don\'t have to be buttons or links to be clickable. This piece of advice goes beyond just this very blank page.</span>';
+                '<span onclick="goto(1)">Exactly what you were looking for.</span> <br><br><br><br><br><br><br><br><br><br>AHH how do I go back<br><br><br><br><br><br><br><br><br><br><span style="font-size: 8px;">Pro Tip: stuff doesn\'t have to be buttons or links to be clickable. This piece of advice goes beyond just this very blank page.</span>';
             break;
         case "loadme":
-            document.getElementById("load").innerHTML = `<br>Ahh smart! This might take a while to load, though. <br /> <img src='loading.gif'/> <br> <button onclick="goto('impatience')" tabindex="0">Skip the wait. Be impatient.</button>`;
+            document.getElementById("load").innerHTML = `<br>Ahh smart! This might take a while to load, though. <br /> <img src='https://harmlesswebsite.leoshi6.repl.co/loading.gif'/> <br> <button onclick="goto('impatience')" tabindex="0">Skip the wait. Be impatient.</button>`;
             break;
         case "impatience":
             document.getElementById("load").innerHTML = "<br>See, very harmless! It even taught you a lesson!";
@@ -57,7 +56,7 @@ function goto(num) {
             window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
             break;
         case -2:
-            document.getElementById("baudy").innerHTML = '<button onclick="goto(1)">home</button><br><br>';
+            document.getElementById("baudy").innerHTML = '<button onclick="goto(4)">back</button><br><br>';
             row = random(2, 29);
             column = random(1, 120);
             document.getElementById("baudy").style.fontSize = "20px";
@@ -76,19 +75,25 @@ function goto(num) {
             var color1 = Math.floor(Math.random() * 256).toString();
             var color2 = Math.floor(Math.random() * 256).toString();
             var color3 = Math.floor(Math.random() * 256).toString();
+			
+			if (document.getElementById('colorPopup')) {
+			if (document.getElementById('colorbox')) {	document.getElementById('colorbox').removeAttribute('style');
+				document.getElementById('colorbox').innerHTML = "Color opens in popup at bottom-right of screen.";
+													 }
+				globalThis.noOpen = true;
+				document.getElementById('colorPopup').style.display = 'block';
+				document.querySelector('#colorPopupDIV').style.backgroundColor = "rgb(" + color1 + "," + color2 + "," + color3 + ")"; 
+			} else {
             document.getElementById("colorbox").style.backgroundColor = "rgb(" + color1 + "," + color2 + "," + color3 + ")";
+			}
+			if (document.getElementById('rgb')) {
             document.getElementById("rgb").innerHTML = "rgb of color: " + color1 + ", " + color2 + ", " + color3;
-            document.getElementById("rgb").innerHTML += "<br>hex of color: " + rgbToHex(color1, color2, color3);
+            document.getElementById("rgb").innerHTML += "<br>hex of color: " + rgbToHex(color1, color2, color3).toUpperCase();
+			}
             break;
         case 1:
-            document.getElementById("stuff").innerHTML = `
-      <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>A very harmless website</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body id='baudy'>
+            document.getElementById("baudy").innerHTML = `
+      
 	  <h1>Hey look! This is a very safe website. Stuff will never go wrong!</h1>
     <button onclick='goto(-1)'>A very blank page</button><br /><br />
     <br />
@@ -103,25 +108,23 @@ function goto(num) {
     <textarea name="html" id="html">Write code here</textarea><br /><button onclick="submit()">submit</button><br></br>
 	  <span id="result">Results here ya BIG NUB</span><br></br>
     <iframe width="110" height="200" src="https://www.myinstants.com/instant/rick-rolled-99226/embed/"></iframe>
-      <p>Tired of so many unexpected rickrolls? <a href='pro.html'>Upgrade your membership!</a></p>
-    <a href='wesitecrasher.html'>don't click this or your website will crash! (and this website won't be safe anymore so dont click it and ruin its reputation)</a>
+      <p>Tired of so many unexpected rickrolls? <a href='https://harmlesswebsite.leoshi6.repl.co/pro.html'>Upgrade your membership!</a></p>
+    <a href='https://harmlesswebsite.leoshi6.repl.co/wesitecrasher.html'>don't click this or your website will crash! (and this website won't be safe anymore so dont click it and ruin its reputation)</a>
     <p>Don't have a favorite color? Find one!</p>
     <div id='colorbox' style='background-color: rgb(255,255,255); width: 200px; height: 150px; border: 2px solid black;'></div><br>
     <button onclick='goto("randomizeColor")'>Randomize!</button>
-    <p id='rgb'>rgb of color: 255, 255, 255<br>hex of color: #ffffff</p>
-    <a href='endlessEnemies.html'>minigame if you're bored</a><br>
-    <a href='stoneAgeSurvival.html'>another minigame if you're bored of the previous one</a>
+    <p id='rgb'>rgb of color: 255, 255, 255<br>hex of color: #FFFFFF</p>
+    <a href='https://harmlesswebsite.leoshi6.repl.co/endlessEnemies.html'>minigame if you're bored</a><br>
+    <a href='https://harmlesswebsite.leoshi6.repl.co/stoneAgeSurvival.html'>another minigame if you're bored of the previous one</a>
     <p>You can do cool stuff with html editing!</p><br> 
-    <img src='be4edit.png'><br>
+    <img src='https://harmlesswebsite.leoshi6.repl.co/be4edit.png'><br>
     can turn into <br>
-    <img src='afteredit.png'><br>
-    <button onclick='goto(2)'>More Information</button>
-    <script src='script.js'></script>
-  </body>`;
+    <img src='https://harmlesswebsite.leoshi6.repl.co/afteredit.png'><br>
+    <button onclick='goto(2)'>More Information</button>`;
             break;
         case "code":
             document.getElementById("baudy").innerHTML =
-                '</p><br><center><h1><button onclick="goto(1)">home</button><br>AWW COME ON! ITS A BLANK PAGE WITH <span style = "text-decoration: italic;">ABSOLUTELY NOTHING</span> ON IT!</h1><p>But please try looking below</p></center><br><br><br><br><br><br><br><br><br><p style="font-size: 1px;">Save this code. It will come in handy later: ' +
+                '</p><br><center><h1><button onclick="goto(4)">back</button><br>AWW COME ON! ITS A BLANK PAGE WITH <span style = "text-decoration: italic;">ABSOLUTELY NOTHING</span> ON IT!</h1><p>But please try looking below</p></center><br><br><br><br><br><br><br><br><br><p style="font-size: 1px;">Save this code. It will come in handy later: ' +
                 code +
                 "</p>";
             break;
@@ -148,7 +151,7 @@ function goto(num) {
             document.querySelector("link").href = "rick.css";
             for (var x = 1; x <= 10; x++) {
                 for (var y = 1; y <= 10; y++) {
-                    document.getElementById("baudy").innerHTML += '<img src="rickroll.gif">';
+                    document.getElementById("baudy").innerHTML += '<img src="https://harmlesswebsite.leoshi6.repl.co/rickroll.gif">';
                 }
             }
             break;
@@ -157,7 +160,7 @@ function goto(num) {
             break;
         case "hacksite":
             document.getElementById("baudy").innerHTML =
-                "<button onclick=\"window.open('https://alanhw.weeklyd3.repl.co/terminal.html', 'alanhw', 'height=500,width=800');\">Open in new window</button><iframe src=\"https://alanhw.weeklyd3.repl.co/terminal.html\" style=\"width: 100%; height: 80%; border: none;\"></iframe>";
+                "<button onclick=\"window.open('https://alanhw.weeklyd3.repl.co/terminal.html', 'alanhw', 'height=500,width=800');\">Open in new window</button><iframe src=\"https://alanhw.weeklyd3.repl.co/terminal.html\" style=\"width: 100%; height: 80vh; border: none;\"></iframe>";
             document.getElementById("baudy").innerHTML += "Doesn't work? try the manual code editor on the <button onclick='goto(1)'>home</button> page.";
             document.getElementById("baudy").innerHTML += "<p>Process ID: {" + uuidv4() + "}, <button onclick=\"goto('hacksite');\">start new instance</button></p>";
             break;
@@ -168,7 +171,7 @@ function goto(num) {
             document.getElementById("baudy").innerHTML = 'if you are that curious, find out what <button onclick="goto(0)">this button</button> goes to.';
             break;
         case "deadend":
-            document.write("<h1>AWW COME ON YOU GOT DEAD ENDED</h1><p>But hey, at least you didnt get rickrolled.</p>");
+            document.getElementById('baudy').innerHTML = "<h1>AWW COME ON YOU GOT DEAD ENDED</h1><p>But hey, at least you didnt get rickrolled.</p>";
             break;
         case 3:
             document.getElementById("baudy").innerHTML = `
@@ -200,12 +203,12 @@ function goto(num) {
     <button id='start' onclick='document.getElementById("start").style.display="none"; document,getElementById("test").style.display="block"'>Start the test!</button>
     <div id='test' style='display: none;'>
     1. Type the name of this singer:
-    <img src='rickastley.png' style='width: 512px; height: 288px;'> <br>
-    <span id='rickinput' style="white-space:pre-wrap;"></span><img src="Cursor.gif" alt="" /><br>
+    <img src='https://harmlesswebsite.leoshi6.repl.co/rickastley.png' style='width: 512px; height: 288px;'> <br>
+    <span id='rickinput' style="white-space:pre-wrap;"></span><img src="https://harmlesswebsite.leoshi6.repl.co/Cursor.gif" alt="" /><br>
 <span id="keyboard">
       <button onclick='document.getElementById("rickinput").innerHTML += "A"'>A</button><button onclick='document.getElementById("rickinput").innerHTML += "B"'>B</button><button onclick='document.getElementById("rickinput").innerHTML += "C"'>C</button><button onclick='document.getElementById("rickinput").innerHTML += "D"'>D</button><button onclick='document.getElementById("rickinput").innerHTML += "E"'>E</button><button onclick='document.getElementById("rickinput").innerHTML += "F"'>F</button><button onclick='document.getElementById("rickinput").innerHTML += "G"'>G</button><button onclick='document.getElementById("rickinput").innerHTML += "H"'>H</button><button onclick='document.getElementById("rickinput").innerHTML += "I"'>I</button><button onclick='document.getElementById("rickinput").innerHTML += "J"'>J</button><button onclick='document.getElementById("rickinput").innerHTML += "K"'>K</button><button onclick='document.getElementById("rickinput").innerHTML += "L"'>L</button><button onclick='document.getElementById("rickinput").innerHTML += "M"'>M</button><br><button onclick='document.getElementById("rickinput").innerHTML += "N"'>N</button><button onclick='document.getElementById("rickinput").innerHTML += "O"'>O</button><button onclick='document.getElementById("rickinput").innerHTML += "P"'>P</button><button onclick='document.getElementById("rickinput").innerHTML += "Q"'>Q</button><button onclick='document.getElementById("rickinput").innerHTML += "R"'>R</button><button onclick='document.getElementById("rickinput").innerHTML += "S"'>S</button><button onclick='document.getElementById("rickinput").innerHTML += "T"'>T</button><button onclick='document.getElementById("rickinput").innerHTML += "U"'>U</button><button onclick='document.getElementById("rickinput").innerHTML += "V"'>V</button><button onclick='document.getElementById("rickinput").innerHTML += "W"'>W</button><button onclick='document.getElementById("rickinput").innerHTML += "X"'>X</button><button onclick='document.getElementById("rickinput").innerHTML += "Y"'>Y</button><button onclick='document.getElementById("rickinput").innerHTML += "Z"'>Z</button><br><button onclick='document.getElementById("rickinput").innerHTML += " "'>Space</button></button><button onclick='document.getElementById("rickinput").innerHTML = document.getElementById("rickinput").innerHTML.slice(0, -1)'>Delete</button></span><button onclick='submitrick()'>Submit</button><br /><button onclick="document.getElementById('fill').style.display = 'block'; document.getElementById('filltext').style.display = 'block';this.style.display = 'none';document.getElementById('keyboard').style.display = 'none';document.getElementById('filltext').focus();document.getElementById('filltext').value = document.getElementById('rickinput').textContent;" id="fillbutton">Enable keyboard input</button>
 
-<form action="javascript:;" style="display: none;" id="fill">Please type to fill in the answer.
+<form autocomplete='off' action="javascript:;" style="display: none;" id="fill">Please type to fill in the answer.
 <label><span style="display: none;">Fill with text:</span> <input oninput="document.getElementById('rickinput').textContent = document.getElementById('filltext').value;" id="filltext" onblur="document.getElementById('keyboard').style.display = 'inline'; document.getElementById('fillbutton').style.display = 'block'; this.parentNode.parentNode.style.display = 'none';" /></label></form><br>
     </div>`;
             break;
@@ -235,17 +238,17 @@ function goto(num) {
       goto("rick");
     } 
     if (x === 1){
-      document.write("I expect you to stay here for 30 years. I hope you are honest despite being a hacker since I won't check.");
+      write("I expect you to stay here for 30 years. I hope you are honest despite being a hacker since I won't check.");
     } 
     if (x === 2){
-      document.write("Find a way to leave some E-money here, okay? I'll come and collect it in a while.");
+      write("Find a way to leave some E-money here, okay? I'll come and collect it in a while.");
     }
       break;
       case 9:
         document.getElementById('baudy').innerHTML = `
     <h3>Hmm, so how should you be punished by "Choose..."?</h3>
     <p>I have no idea! but since you so stubbornly insisted that you should be punished this way, let me consult my smartest friend: Google!</p>
-    <img src='googlesearch.png'>
+    <img src='https://harmlesswebsite.leoshi6.repl.co/googlesearch.png'>
     <p>Okay, actually, scratch that. Google is the dumbest thing that humanity has ever created. I would need to interpret your way of punishment by myself. Hmm, lets see... Oh I know! I will make you choose a bunch of options until you get bored to death! That will be a good way to punish you!</p>
     <p>Choose the following: </p>
     <ol>
@@ -264,24 +267,67 @@ function goto(num) {
         document.getElementById('baudy').innerHTML = `
     <center><h2>1 SECOND CPS TEST</h2><br><p>get 10 cps or more to continue.</p> <h3 id='clicks'>Clicks: 0</h3><button onclick = 'clickTest()' style='height: 400px; width: 500px;'>Click me to start</button><br />
 <button id="goon" onclick="goto(11);" disabled="disabled">Continue</button>
-	<p id="results"></p></center>
-	  <script>
-		  
-    </script>`
+	<p id="results"></p></center>`
         break;
 		case 11:
-			document.getElementById('baudy').innerHTML = `<p>I assume you have noticed that your tests are gradually getting harder. That is very true. And I'm very sure you don't like it. Just deal with it, k? The escape course is almost over. I just need to make sure that you aren't cheating in anything and have looked through all the previous information. Anyway, lets play some word association! (but if you give the answer I'm not looking for, gg.) <br> -Hacker</p><br></br>
+			document.getElementById('baudy').innerHTML = `<p>I assume you have noticed that your tests are gradually getting harder. That is very true. And I'm very sure you don't like it. Just deal with it, k? The escape course is almost over. I just need to make sure that you aren't cheating in anything. Anyway, lets play some word association! (but if you give the answer I'm not looking for, gg.) <br> -Hacker</p><br></br>
     <button onclick='document.getElementById("wordassociation").style.display = "block"; document.getElementById("start").style.display = "none"' id='start'>Start!</button>
     <div id = 'wordassociation' style='display: none;'>
       <h2 id='word'>poop</h2>
 	  <form action="javascript:;" onsubmit="submitAssociation()">
-      <input type='text' id='answer'> <button autocomplete='off'>Submit</button>
+      <input autocomplete='off' type='text' id='answer'> <button>Submit</button>
 	  </form>
     </div>`
     break;
       case 12:
-        document.write('you win')
+        document.getElementById('baudy').innerHTML = `
+    <div id='thebutton' style='width: 500px; height: 500px; background-color: gray;' onmousedown='clickthebutton()' tabindex="0"></div>`
+        break;
+      case 13:
+        document.getElementById('baudy').innerHTML ='<h1>you lose :(</h1><p>you thought you were a pro at this? <button onclick="goto(14)">No you aren\'t!</button>';
+        break;
+		case 14:
+			document.getElementById('baudy').innerHTML = `
+<h1>Oh, so you think you're good?</h1>
+<p>Pass this!</p>
+<span>Do you want to be rickrolled?</span>
+<button onclick='goto(15)' style='border: none; background-color: white; color: white;'>no</button><br>
+    <button onclick='goto(0)' id='yesss' onmouseover = 'this.innerHTML = "YES"; document.getElementById("noooo").innerHTML = "NO"'>YES</button><button onclick='goto(0)' id='noooo' onmouseover = 'this.innerHTML = "YES";document.getElementById("yesss").innerHTML = "NO"'>NO</button>
+</p>
+<button onclick="goto(7)">Never mind, I'm bad at this</button>
+`;
+			break;
+      case 15:
+        document.getElementById('baudy').innerHTML = `<h1>FINAL TEST</h1>
+    <h3>Enter the code you saw earlier.</h3>
+    <h5>I mean, you did save it, didn't you?</h5>
+    <input type='text' id='enterthecode'></input><button onclick='checkforcode()'>Submit</button>`
+        break;
+      case 'win':
+        document.getElementById('baudy').innerHTML = `<h1><strong>YOU PASSED!</strong></h1>
+    <button onclick='goto("heckercaught")'>continue</button><br></br>
+    <small>oh no...</small>`
+        break;
+      case 'heckercaught':
+        document.getElementById('baudy').innerHTML = ``;
+			if (document.getElementById('output')) {
+				document.getElementById('output').style.display = 'none';
+				pre.innerHTML += "<div class=\"sysmsg\"><big><big><big>Congrats!</big></big></big>\nYou won harmlesswebsite. Have a good day!</div>";
+			}
+			break;
+		case 'home':
+			write(`<button onclick='goto(1)'>click me!</button>
+    <button onclick='goto(10)'>no, click me!</button>
+    <button onclick='goto(13)'>don't click me!</button><br>
+    <h3>Police: sorry, you were not actually the hacker. We have caught the real hacker, who has apparently framed you. We will allow you to continue to what you would actually have seen.</h3>
+    <button onclick='real'>continue</button>`);
+			break;
+
+
   }
+					if (document.getElementById('output') && !globalThis.noOpen) {document.getElementById('output').style.display = 'block';}
+
+			globalThis.noOpen = false;
 }
 // Do not use onclick. Instead, use an event listener
 // like the one below.
@@ -325,10 +371,10 @@ function kinghacker() {
 function chooseanswer() {
     switch (document.getElementById("choice").value) {
         case "prison":
-            document.write("I expect you to stay here for 30 years. I hope you are honest despite being a hacker since I won't check.");
+            write("I expect you to stay here for 30 years. I hope you are honest despite being a hacker since I won't check.");
             break;
         case "fine":
-            document.write("Find a way to leave some E-money here, okay? I'll come and collect it in a while.");
+            write("Find a way to leave some E-money here, okay? I'll come and collect it in a while.");
             break;
         case "rickroll":
             goto("rick");
@@ -353,7 +399,6 @@ globalThis.clickTestStarted = false;
 			  if (globalThis.clickTestStarted === false) {
 			  	globalThis.clickTestStarted = true;
 				globalThis.startTime = new Date().getTime();
-				  
 			  setTimeout(function() {
 				  document.getElementById('clicks').innerHTML += "<br /><b>Test terminated. Clicks per second: " + (Math.round(globalThis.clicksNow * 100 / globalThis.seconds) / 100) + "</b>";
 				  globalThis.records.push(globalThis.clicksNow / globalThis.seconds);
@@ -372,17 +417,17 @@ globalThis.clickTestStarted = false;
 			  }
         globalThis.clicksNow += 1;
 			
-        document.querySelector('[onclick="clickTest()"]').innerHTML = "Quick! Raise your click count to " + (globalThis.clicksNow + 1) + "!";
+        document.querySelector('[onclick="clickTest()"]').innerHTML = "Quick! Raise your click count to " + (globalThis.clicksNow + 1) + "!"; 
 			  document.getElementById('clicks').innerHTML = 'Clicks: '+globalThis.clicksNow;
 		  }
 function submitAssociation() {
-  var things = {'poop':'yummy', 'HTML':'editing', 'Feeway entrance':'fart'}
-  var lists = ['poop','HTML','Feeway entrance']
+  var things = {'poop':'yummy', 'HTML':'editing','Hacker':"report", 'Rick':'roll', 'Feeway entrance':'fart'}
+  var lists = ['poop','HTML','Hacker','Rick', 'Feeway entrance',]
   var correct = document.getElementById('word')
   var answer = document.getElementById('answer')
   if (things[correct.innerHTML] == answer.value.toLowerCase()){
     if (answer.value.toLowerCase() == 'fart'){
-      goto(12)
+      goto(12);
     }
     correct.innerHTML = lists[lists.indexOf(correct.innerHTML)+1]
     answer.value = ''
@@ -391,3 +436,22 @@ function submitAssociation() {
     goto(0)
   }
 }
+function clickthebutton() {
+  var l = parseInt(document.getElementById('thebutton').style.width)
+  if (l == 2){
+    goto(13)
+  }
+  else{
+    document.getElementById('thebutton').style.width = (l-2)+'px';
+    document.getElementById('thebutton').style.height = (l-2)+'px';
+  }
+}
+function checkforcode() {
+  if (document.getElementById('enterthecode').value == code){
+    goto('win')
+  }
+  else{
+    goto(0)
+  }
+}
+console.log('you win');
