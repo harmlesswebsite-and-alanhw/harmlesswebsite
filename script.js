@@ -8,6 +8,9 @@ function uuidv4() {
 function write(text) {
 	document.getElementById('baudy').innerHTML = text;
 }
+function taitl(text) {
+	document.getElementById('taitl').innerHTML = text;
+}
 var id = uuidv4();
 function goto(num) {
     switch (num) {
@@ -298,36 +301,175 @@ function goto(num) {
 `;
 			break;
       case 15:
+			taitl("Final Test");
         document.getElementById('baudy').innerHTML = `<h1>FINAL TEST</h1>
     <h3>Enter the code you saw earlier.</h3>
     <h5>I mean, you did save it, didn't you?</h5>
     <input type='text' id='enterthecode'></input><button onclick='checkforcode()'>Submit</button>`
         break;
       case 'win':
+			taitl('Level 1 Complete');
         document.getElementById('baudy').innerHTML = `<h1><strong>YOU PASSED!</strong></h1>
-    <button onclick='goto("heckercaught")'>continue</button><br></br>
+<p>You can leave now, or you can continue to move on to another level.</p>
+    <button onclick='goto("heckercaught")'>continue</button><br /><br />
     <small>oh no...</small>`
         break;
-      case 'heckercaught':
-        document.getElementById('baudy').innerHTML = ``;
-			if (document.getElementById('output')) {
+		case 'closewindow':
+						if (document.getElementById('output')) {
 				document.getElementById('output').style.display = 'none';
 				pre.innerHTML += "<div class=\"sysmsg\"><big><big><big>Congrats!</big></big></big>\nYou won harmlesswebsite. Have a good day!</div>";
 			}
+			break;
+      case 'heckercaught':
+			document.getElementById('taitl').textContent = 'Homework';
+        document.getElementById('baudy').innerHTML = `<h1>Oh, that's not the end...</h1><p>But to pass, please:<br /><img src="https://badhtml.com/pics/captcha.jpg" alt="Calculus equation" /></p>
+<form onsubmit="submitCAPTCHA()" action="javascript:;">
+<label>Answer:
+<input type="text" name="answer" />
+</label>
+<input type="submit" value="Submit Assessment" />
+</form>
+`;
+
+			break;
+		case 'ransomware':
+			document.getElementById('taitl').textContent = 'Oh no...';
+			write(`
+<h1>The hacker isn't done yet</h1>
+<p>He has encrypted the server</p>
+<button onclick="goto('ransom')">Continue</button>
+`);
 			break;
 		case 'home':
 			write(`<button onclick='goto(1)'>click me!</button>
     <button onclick='goto(10)'>no, click me!</button>
     <button onclick='goto(13)'>don't click me!</button><br>
     <h3>Police: sorry, you were not actually the hacker. We have caught the real hacker, who has apparently framed you. We will allow you to continue to what you would actually have seen.</h3>
-    <button onclick='real'>continue</button>`);
+    <button onclick="goto('heckercaught')">continue</button>`);
 			break;
-
+		case 'ransom':
+			taitl("Debug Info -- Intercepted Message");
+			write(ransomMessage(`The server has been encrypted. Thus, your request to access the content at <code>/script.js</code> could not be fulfilled.<br /><br />See below for decryption directions<br /><br />Oh, and before you read the decryption directions, don't start the decryption, or you'll get rickrolled.`, true));
+			break;
+		case 'decryptionDirections':
+			taitl(`Decryption Directions`);
+			write(ransomMessage(`To decrypt your files, please <b>HTML edit</b> the paragraph on the main files decrypted page.</p><p>Please make it say:</p><p>BWAHAHAHAHA I'M PASSING THIS LEVEL</p><p>Then, on the home page, click <kbd>Begin Decryption</kbd>.</p><p>Click below to go back:`, false));
+			break;
+		case 'ransomWin':
+			taitl('Decrypting files...');
+			write(`Please wait while we decrypt your files...<br /><progress id="progress" max="100" value="0" style="display: block; height: 30px; width: 100%; -webkit-appearance: none; -moz-appearance: none; appearance: none;"></progress><center><span id="progressText">0</span>%</center><center><button id="continueButton" disabled="disabled" onclick="goto('gasLeak')">Continue to site</button>`);
+			var int = setInterval(function() {
+				var currentProgressText = document.getElementById('progressText');
+				var currentProgress = parseInt(currentProgressText.textContent);
+				if (currentProgress == 99) clearInterval(int);
+				var newProgress = currentProgress + 1;
+				document.getElementById('progressText').textContent = newProgress;
+				document.getElementById('progress').value = newProgress;
+				if (newProgress == 100) {
+					document.getElementById('continueButton').disabled = '';
+				}
+				
+			}, 150);
+			break;
+		case 'gasLeak':
+			taitl('Gas leak!');
+			write(`<h2>The gas leaked!</h2><p>You're stolling next to the server room, feeling good about cracking the ransomware, and BOOM!</p><p>It kinda stinks here!</p><img src="https://harmlesswebsite.leoshi6.repl.co/itkindastinkshere.png" alt="It kinda stinks here!" /><p>Image credit: Alan via Photoshopped Images folder, leyzbones [at] gmail.com</p>
+<p>You tell the office. But you're the manager.</p>
+<button onclick="goto('evacuation')">Request Evacuation</button>
+<button onclick="goto(0)">Run away and don't care</button>
+<p>By the way, this is exactly what happended <time datetime="2022-03-17T15:46">on March 17, 2022 at around 3:46 PM</time> at school.</p>
+`);
+			break;
+		case 'evacuation':
+			write(`<p>You request evevryone to evacuate.</p><p>Now, this:<br /><img src="https://alanhw.weeklyd3.repl.co/BSIV.png" alt="BSIV" /><br /> gets full of people.</p><p>Finally, the speakers announce that...</p><button onclick="goto('evacuation1');">click here to find out</button>`);
+			break;
+		case 'evacuation1':
+			write(`<p>You got disconnected. Attempting to reconnect...</p><p><b><img src="https://harmlesswebsite.leoshi6.repl.co/loading.gif" style="height: 1em; width: 1em;" alt="" /> connecting...</b></p><p><button onclick="goto('serverChoice');">Impatient? Switch server</button></p><details><summary>Debugging server? Open details.</summary><pre id="connection-log">-- Disconnected, attempting to re-connect --</pre></details>`);
+			globalThis.currentPreLogPosition = 0;
+			preLogItems = ["Trying with primary domain...", "Looking up host: <i>https://harmlesswebsite.leoshi6.repl.co</i>", "Connecting...", "<b>Failed</b>: Internet connection not found", "Trying again with alternative server <i>https://harmlesswebsite.idkwutocalmself.repl.co</i>...", "Connecting...", "<b>Failed</b>: DNS resolution error"];
+			var tipInterval = setInterval(function() {
+			if (!document.getElementById('connection-log')) { 
+				clearInterval(tipInterval); return; 
+															} else {
+				document.getElementById('connection-log').innerHTML += "\n" + preLogItems[globalThis.currentPreLogPosition];
+			}
+				globalThis.currentPreLogPosition += 1;
+				if (globalThis.currentPreLogPosition === 7) globalThis.currentPreLogPosition = 0;
+			}, 1500);
+			break;
+		case 'showServerStatus':
+			clearTimeout(rickroll1);
+			write(`<p>FINALLY! You have been connected.</p><p>But, you find out the whole mega-server-thing got left at your place, and you need it to continue..</p>`);
+			break;
+		case 'serverChoiceSubmit':
+			var server = document.getElementById('server').selectedIndex;
+			console.log(server);
+			switch (server) {
+				case 0:
+					write('<p onclick="goto(\'showServerStatus\')">BWAHAHA THAT IS NOT GOING TO WORK THIS TIME</p>');
+					var rickroll1 = setTimeout(function() {
+						goto(0);
+					}, 1000);
+					break;
+				case 1:
+					goto('evacuation1');
+					break;
+				case 2:
+					write(`To visit alanhw, please <a href="https://alanhw.weeklyd3.repl.co">launch it.</a><p>Or, you can try this frame:</p><div style="background-color: cyan;">ALANHW embed</div><iframe src="https://alanhw.weeklyd3.repl.co" style="width: 100%; height: 50%; border: 1px solid;"></iframe><div><br />Or <button onclick="goto('serverChoice');">switch a server AGAIN</button>`);
+					break;
+				case 3:
+					goto('showServerStatus');
+					break;
+			}
+			break;
+		case 'serverChoice':
+			clearInterval(tipInterval);
+			write(`
+Choose a server.
+<label>
+Server:
+<select id="server">
+<option>Choose...</option>
+<option>Harmlesswebsite: leoshi6/idkwutocalmself</option>
+<option>alanhw</option>
+</select></label>
+<input type="submit" onclick="goto('serverChoiceSubmit')" />
+<p><small>hint: add an extra option by HTML editing it.</small></p>
+<button onclick="addExtraOption()">Too lazy?</button>
+`);
+			break;
 
   }
 					if (document.getElementById('output') && !globalThis.noOpen) {document.getElementById('output').style.display = 'block';}
 
 			globalThis.noOpen = false;
+}
+function submitRansomMessage() {
+	console.log(document.getElementById('htmleditans').innerHTML);
+	if (document.getElementById('htmleditans').textContent !== "BWAHAHAHAHA I'M PASSING THIS LEVEL") goto(0);
+	else goto('ransomWin');
+}
+function ransomMessage(text, contenteditable) {
+	var stringbef = `
+<p>
+Error <b>503</b>: Can't access resource <code>/script.js</code>: Connection intercepted.</p>	
+<p>[Server debug] The message that the intercepter sent should be shown on screen.</p>
+</div>
+<div style="background-color: white;position: fixed; top: 50%; left: 50%;transform: translate(-50%, -50%); color: black;border: 1px solid; -webkit-box-shadow: 5px 5px 15px 5px #cccccc;  box-shadow: 5px 5px 15px 5px #cccccc;">
+<div style="background-color: red; color: white; ">
+<h2>Ransomware Message (from harmlesswebsite) (<button disabled="disabled">&times;</button>)</h2>
+</div>
+`;
+	stringbef += "<p id=\"htmleditans\"";
+	if (contenteditable) stringbef += ' contenteditable="true"';
+	stringbef += ">";
+	var stringafter = `</p>
+<p><b>Helpful pages:</b>
+<button onclick="goto('ransom')">Home</button>
+<button onclick="goto('decryptionDirections')">Decryption Directions</button>
+<button onclick="submitRansomMessage()">Begin Decryption</button>
+`;
+	return stringbef + text + stringafter;
 }
 // Do not use onclick. Instead, use an event listener
 // like the one below.
@@ -453,5 +595,19 @@ function checkforcode() {
   else{
     goto(0)
   }
+}
+function submitCAPTCHA() {
+	if (document.querySelector('input').value.toLowerCase() !== 'illuminati') {
+		goto(0);
+	} else {
+		goto('ransomware');
+	}
+}
+function addExtraOption() {
+	for (var i = 0; i < 5; i++) {
+		if (!confirm("Do you want to cheat? REALLY!?")) return;
+	}
+	document.getElementById('server').innerHTML += '<option>get rickrolled</option>';
+	return alert('All right, you have a fourth option - get rickrolled.');
 }
 console.log('you win');
