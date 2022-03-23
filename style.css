@@ -1,0 +1,25 @@
+body {
+	font-family: system-ui;
+}
+[onclick] {
+	cursor: pointer;
+}
+button, input[type=button], input[type=submit] {
+	padding: 7px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+	border: 1px solid;
+	-webkit-box-shadow: 1px 1px 1px 0px #cccccc; 
+	box-shadow: 1px 1px 1px 0px #cccccc;
+	background-color: white;
+	transition: box-shadow 0.5s, -webkit-box-shadow 0.5s, background-color 0.5s;
+}
+input:not([type=button]):not([type=submit]) {
+	padding: 7px; 
+	border: 1px solid;
+}
+button:hover, input[type=button]:hover, input[type=submit]:hover {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	background-color: #eeeeee;
+}
