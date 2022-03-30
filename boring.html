@@ -1,0 +1,162 @@
+<!-- Unfinished -->
+<!DOCTYPE html>
+<html><head><title>Unfinished game</title><meta name="viewport" content="width=device-width,initial-scale=1.0" /></head>
+<body>
+	<img style="display: none;" src="https://harmlesswebsite.leoshi6.repl.co/BSIV_ALT.png" alt="" />
+	<form action="javascript:;" onsubmit="startGame()" style="padding: 3px;">
+		<p>DISCLAIMER: This game features flashing elements that can get as fast as 0.5 seconds per animation cycle. If you have epilepsy, please do not play this game.</p>
+		<label>Enter the number of levels you want (0 for infinite):
+		<input id="levels" type="number" min="0" />
+		</label>
+		<input type="submit" value="Start Game" />
+	</form>
+	<div style="display: none;" id="gameplay">
+		<br />
+		<div class="cool" style="animation-duration: 30s; padding: 30px; border-radius: 10px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+			<span id="load"><img src="loading.gif" alt="" height="20" /> Loading words...</span>
+<form style="display: none;" action="javascript:;" id="quizForm" onsubmit="submitAWord()">
+<h2>All right...</h2>
+	<p>The rules are simple:</p>
+	<ol>
+		<li>Look at the word</li>
+		<li>Type the translation</li>
+		<li>Submit!</li>
+		<li>Repeat!</li>
+	</ol>
+	<hr />
+	<p>What does <b id="wordField">$WORD</b> mean?</p>
+	<label>Meaning of <b id="wordField2">$WORD</b>: <input id="answer" autocomplete="off" /></label>
+	<input type="submit" />
+</form>
+<p>You currently have <span id="right">$RIGHT</span> correct and <span id="wrong">$WRONG</span> wrong, for a percentage of <span id="percent">$PERCENT</span>.</p>
+			<div style="display: none;" id="returnLink"><center style="font-size: 40px;">Game <span id="game-status">$STATUS</span>!</center> <a href="https://harmlesswebsite.leoshi6.repl.co">Return to site?</a></div>
+
+		</div>
+	</div>
+	<script src="https://harmlesswebsite.leoshi6.repl.co/script.js"></script>
+	<script>
+	function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+function isNumeric(str) {
+  if (typeof str != "string") return false;
+  return !isNaN(str) &&
+         !isNaN(parseFloat(str)) 
+}
+		function startGame() {
+			var questionsLeft = document.getElementById('levels').value;
+			if (questionsLeft !== "0" && isNumeric(questionsLeft)) questionsLeft = Math.round(parseFloat(questionsLeft));
+			else questionsLeft = Infinity;
+			globalThis.questionsLeft = questionsLeft;
+			document.getElementById('gameplay').style.display = 'block';
+			document.querySelector('form[onsubmit="startGame()"]').style.display = 'none';
+			loadWords();
+		}
+		function loadWords() {
+			var oReq = new XMLHttpRequest;
+			oReq.addEventListener('load', function() {
+				var words = JSON.parse(this.responseText);
+				shuffle(words);
+				globalThis.words = words;
+				document.getElementById('load').style.display = 'none';
+				document.getElementById('quizForm').style.display = 'block';
+				document.getElementById('wrong').textContent = 0;
+				document.getElementById('right').textContent = 0
+				document.getElementById('percent').textContent = '[undefined]%';
+				loadAWord(null);
+			});
+			oReq.open('GET', 'https://' + location.hostname + '/latin_words.json', true);
+			oReq.send();
+		}
+		function loadAWord(word2Avoid) {
+			if (globalThis.questionsLeft === 0) {
+				document.getElementById('quizForm').style.display = 'none';
+				document.getElementById('returnLink').style.display = 'block';
+				var status = 'finished (you passed)';
+				var right = parseInt(document.querySelector('#right').textContent),
+					wrong = parseInt(document.querySelector('#wrong').textContent);
+				if ((right / (right + wrong)) < 0.6) status = 'over';
+				document.getElementById('game-status').textContent = status;
+				return;
+			}
+			var words = globalThis.words;
+			while (words[0].word === word2Avoid) shuffle(words);
+
+			var word = words[0];
+			document.getElementById('wordField').textContent = word.word;
+			document.getElementById('wordField2').textContent = word.word;
+			globalThis.ans = word.ans;
+			globalThis.word = word.word;
+		}
+		function submitAWord() {
+			var newAnimDuration = parseFloat(document.querySelector('.cool').style.animationDuration.slice(0, -1));
+
+			const value = document.getElementById('answer').value;
+			if (value !== globalThis.ans) {
+				// WRONG
+				document.getElementById('wrong').textContent = parseInt(document.getElementById('wrong').textContent) + 1;
+				newAnimDuration *= 0.9;
+			} else {
+				// RIGHT
+				newAnimDuration *= 1.1;
+			document.getElementById('right').textContent = parseInt(document.getElementById('right').textContent) + 1;
+			}
+			var right = parseInt(document.getElementById('right').textContent),
+				wrong = parseInt(document.getElementById('wrong').textContent);
+			document.getElementById('percent').textContent = (Math.round(10000 * (right/(right + wrong))) / 100) + "%";
+			document.getElementById('answer').value = '';
+			document.getElementById('answer').focus();
+			globalThis.questionsLeft--;
+			loadAWord(globalThis.word);
+			if (newAnimDuration < 0.5) newAnimDuration = 0.5;
+			console.log(newAnimDuration + "s");
+			document.querySelector('.cool').style.animationDuration = newAnimDuration + "s";
+		}
+	</script>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		#gameplay {
+			background-image: url(https://harmlesswebsite.leoshi6.repl.co/BSIV_ALT.png);
+			background-size: 100%;
+			width: 100vw;
+			height: 100vh;
+		}
+		.cool {
+			animation-name: cool;
+			animation-iteration-count: infinite;
+		}
+		@keyframes cool {
+			0% {
+				background-color: lime;
+			}
+			33% {
+				background-color: skyblue;
+			}
+			66% {
+				background-color: pink;
+			}
+			100% {
+				background-color: lime;
+			}
+		}
+	</style>
+</body>
+	
+</html>

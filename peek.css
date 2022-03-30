@@ -1,0 +1,11 @@
+[onclick]:hover::before {
+    content: "onclick=\"" attr(onclick) "\"";
+    position: fixed;
+    background-color: white;
+    border: 1px solid;
+    display: block;
+    padding: 7px;
+    font-size: 16px;
+    bottom: 0px;
+    left: 0px;
+}

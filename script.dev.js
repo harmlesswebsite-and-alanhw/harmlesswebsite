@@ -1,3 +1,4 @@
+//Please remember to minify the code then copy-paste it into script.js, or else it will not run. Thank you.
 var code = '';
 for (var i = 0; i < 4; i++) {
 	code += Math.floor(Math.random() * 10);
@@ -121,7 +122,8 @@ max-height: 100%;
     <button onclick='goto("randomizeColor")'>Randomize!</button>
     <p id='rgb'>rgb of color: 255, 255, 255<br>hex of color: #FFFFFF</p>
     <a href='https://harmlesswebsite.leoshi6.repl.co/endlessEnemies.html'>minigame if you're bored</a><br>
-    <a href='https://harmlesswebsite.leoshi6.repl.co/stoneAgeSurvival.html'>another minigame if you're bored of the previous one</a>
+    <a href='https://harmlesswebsite.leoshi6.repl.co/stoneAgeSurvival.html'>another minigame if you're bored of the previous one</a><br />
+<a href="https://harmlesswebsite.leoshi6.repl.co/boring.html">Prepare for something you will have to solve in the future</a>
     <p>You can do cool stuff with html editing!</p><br> 
     <img src='https://harmlesswebsite.leoshi6.repl.co/be4edit.png'><br>
     can turn into <br>
@@ -297,7 +299,7 @@ max-height: 100%;
 <h1>Oh, so you think you're good?</h1>
 <p>Pass this!</p>
 <span>Do you want to be rickrolled?</span>
-<button onclick='goto(15)' style='border: none; background-color: white; color: white;'>no</button><br>
+<span onclick='goto(15)' style='border: none; background-color: white; color: white;'>no</span><br>
     <button onclick='goto(0)' id='yesss' onmouseover = 'this.innerHTML = "YES"; document.getElementById("noooo").innerHTML = "NO"'>YES</button><button onclick='goto(0)' id='noooo' onmouseover = 'this.innerHTML = "YES";document.getElementById("yesss").innerHTML = "NO"'>NO</button>
 </p>
 <button onclick="goto(7)">Never mind, I'm bad at this</button>
@@ -314,7 +316,15 @@ max-height: 100%;
 			taitl('Most important decision of your life');
         document.getElementById('baudy').innerHTML = `<h1><strong>YOU PASSED!</strong></h1>
 <p>You can leave now, or you can continue to move on to another level.</p><button onclick="goto('closewindow')"">leave</button>
-    <button onclick='goto("heckercaught")'>continue</button><br /><br />`
+    <button onclick='goto("heckercaught")'>continue</button><br /><br /><h1>How to HTML edit</h1>If for some random reason you don't already know<br>
+    <h2>Steps</h2>
+    <ol type="1">
+      <li>Open developer tools<br />You will see the <abbr title="Document Object Model">DOM</abbr> open. This step can be achieved by the F12 button or right click and inspect.</li>
+      <li>Find what you want to edit<br>Go to the "Elements" page in the DevTools, and hover over every tag until you find what you want to edit. </li>
+      <li>Change what you want to change<br>This can be done by double clicking the tag. This enables you to edit the contents. Then, you can change the tag.</li>
+      <li>Take a screenshot and send it to your friends!</li>
+    </ol>
+<br> Or, alternatively, you can go to the console and type "document.designMode = 'on';" and then you are able to edit all the text on the page directly.`
         break;
 		case 'closewindow':
 				document.getElementById('baudy').innerHTML = "<div class=\"sysmsg\"><big><big><big>Congrats!</big></big></big>\nYou won harmlesswebsite. Have a good day!</div>";
@@ -835,8 +845,20 @@ Anyway, let's get started.
 <center style="font-size: 20px;">
 Wow, you're really good at this! That's the end of level 2, and have a good day!
 </center>
+<input type="button" onclick="goto('importLevel3')" value="On to Level 3! I can't be beaten, please try!" />
 </div>
 `);
+			break;
+		case 'importLevel3':
+			write(`
+<p><img src="https://harmlesswebsite.leoshi6.repl.co/loading.gif" height="16" /> Loading level 3...</p>
+`);
+			var script = document.createElement('script');
+			script.addEventListener('load', function() {
+				goto3('home');
+			});
+			script.setAttribute('src', 'https://harmlesswebsite.leoshi6.repl.co/level3.js');
+			document.getElementsByTagName('head')[0].appendChild(script);
 			break;
   }
 					if (document.getElementById('output') && !globalThis.noOpen) {document.getElementById('output').style.display = 'block';}

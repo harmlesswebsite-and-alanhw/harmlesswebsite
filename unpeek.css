@@ -1,0 +1,3 @@
+[onclick]:hover::before {
+    display: none;
+}

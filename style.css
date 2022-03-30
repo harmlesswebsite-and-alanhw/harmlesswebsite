@@ -5,6 +5,7 @@ body {
 	cursor: pointer;
 }
 button, input[type=button], input[type=submit] {
+	font-size: inherit;
 	padding: 7px;
 	margin-right: 1px;
 	margin-bottom: 1px;
@@ -14,12 +15,32 @@ button, input[type=button], input[type=submit] {
 	background-color: white;
 	transition: box-shadow 0.5s, -webkit-box-shadow 0.5s, background-color 0.5s;
 }
-input:not([type=button]):not([type=submit]) {
+input:not([type=button]):not([type=submit]), select {
 	padding: 7px; 
 	border: 1px solid;
 }
-button:hover, input[type=button]:hover, input[type=submit]:hover {
+button:not([disabled]):hover, input[type=button]:not([disabled]):hover, input[type=submit]:not([disabled]):hover {
 	box-shadow: none;
 	-webkit-box-shadow: none;
 	background-color: #eeeeee;
+}
+table#magicsquare {
+  text-align: center;
+}
+#magicsquare tr {
+  border: 1px solid black;
+  width: 150px;
+  height: 50px;
+  font-size: 24px
+}
+#magicsquare td {
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+}
+progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 99%;
 }
