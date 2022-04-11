@@ -89,7 +89,7 @@ function isNumeric(str) {
 				var status = 'finished (you passed)';
 				var right = parseInt(document.querySelector('#right').textContent),
 					wrong = parseInt(document.querySelector('#wrong').textContent);
-				if ((right / (right + wrong)) < 0.6) status = 'over';
+				if ((right / (right + wrong)) < 0.8) status = 'over';
 				document.getElementById('game-status').textContent = status;
 				return;
 			}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html id='stuff'>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title id='taitl'>A very harmless website</title>
+  </head>
+	<body id='baudy'>
+        <style>
+            ::before, ::after {
+                vertical-align: center;
+                color: gray;
+            }
+            h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+                color: gray;
+                font-size: 0.5em;
+                padding: 3px;
+            }
+            h1::before {
+                content: "#";
+            }
+            h2::before {
+                content: "##";
+            }
+            h3::before {
+                content: "###";
+            }
+            h4::before {
+                content: "####";
+            }
+            h5::before {
+                content: "#####";
+            }
+            h6::before {
+                content: "######";
+            }
+            b::before, b::after {
+                content: "**";
+            }
+            i::before, i::after {
+                content: "*";
+            }
+            pre.codeblock > code::before, pre.codeblock > code::after {
+                content: "```";
+                display: block;
+            }
+            pre code {
+                background-color: #eeeeee;
+            }
+            .visible {
+                display: block !important;
+            }
+            .inline::before, .inline::after {
+                content: "`";
+            }
+        </style>
+        <h1>This is an EXPERIMENTAL feature and is likely to change in the future.</h1>
+        <div id="editor">
+            <div id="toolbar" style="border: 1px solid;">
+                <button onclick="document.execCommand('bold');">Bold</button>
+                <button onclick="document.execCommand('italic');">Italic</button>
+                <button onclick="if (document.getElementById('more').classList.toggle('visible'));">More</button>
+                <div id="more" style="display: none;">
+                    <button onclick="precode()">Pre/Code</button>
+                    <button onclick="code()">Code</button>
+                    <button onclick="h(1)">H1</button>
+                    <button onclick="h(2)">2</button>
+                    <button onclick="h(3)">3</button>
+                    <button onclick="h(4)">4</button>
+                    <button onclick="h(5)">5</button>
+                    <button onclick="h(6)">6</button>
+                </div>
+            </div>
+        <div contenteditable="true" style="height: 300px; width: 100%; border: 1px solid; overflow: scroll; padding: 3px;">Markdown formatting:
+        <h1>Heading</h1><p><b>bold</b> <i>italic</i> <b><i>both</i></b></p><p>Pre code:</p><pre class="codeblock"><code>foo
+bar
+baz</code></pre></div>
+        </div>
+        <script>
+            document.querySelector('[contenteditable]').addEventListener('paste', (e) => {
+    e.preventDefault();
+    const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+    window.document.execCommand('insertText', false, text);
+});
+            function precode() {
+            var selection = window.getSelection();
+var range = selection.getRangeAt(0);
+var precode = document.createElement('code');
+range.surroundContents(precode);
+                var code = document.createElement('pre');
+                code.classList.add('codeblock');
+                range.surroundContents(code);
+                
+                                    }
+            function h(level) {
+            var selection = window.getSelection();
+var range = selection.getRangeAt(0);
+var precode = document.createElement('h' + level);
+range.surroundContents(precode);
+                
+                                    }
+            function wrap(tag) {
+            var selection = window.getSelection();
+var range = selection.getRangeAt(0);
+var precode = document.createElement(tag);
+range.surroundContents(precode);
+                
+                                    }
+            function code() {
+            var selection = window.getSelection();
+var range = selection.getRangeAt(0);
+var precode = document.createElement('code');
+                precode.classList.add('inline');
+range.surroundContents(precode);
+                
+                                    }
+        </script>

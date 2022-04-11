@@ -10,9 +10,9 @@ button, input[type=button], input[type=submit] {
 	margin-right: 1px;
 	margin-bottom: 1px;
 	border: 1px solid;
-	-webkit-box-shadow: 1px 1px 1px 0px #cccccc; 
-	box-shadow: 1px 1px 1px 0px #cccccc;
-	background-color: white;
+	-webkit-box-shadow: 1px 1px 1px 0px #c9c9c9; 
+	box-shadow: 1px 1px 1px 0px #d4d4d4;
+	background-color: #f3f2f2;
 	transition: box-shadow 0.5s, -webkit-box-shadow 0.5s, background-color 0.5s;
 }
 input:not([type=button]):not([type=submit]), select {

@@ -242,16 +242,14 @@ max-height: 100%;
       break;
     case "palize":
       var x = Math.floor(Math.random()*3); 
-    if (x === 0){
-      goto("rick");
-    } 
-    if (x === 1){
-      write("I expect you to stay here for 30 years. I hope you are honest despite being a hacker since I won't check.");
-    } 
-    if (x === 2){
-      write("Find a way to leave some E-money here, okay? I'll come and collect it in a while.");
-    }
+      if (x === 0)
+        goto("rick");
+      else if (x === 1)
+        write("I expect you to stay here for 30 years. I hope you are honest despite being a hacker since I won't check.");
+      else if (x === 2)
+        write("Find a way to leave some E-money here, okay? I'll come and collect it in a while.");
       break;
+        
       case 9:
         document.getElementById('baudy').innerHTML = `
     <h3>Hmm, so how should you be punished by "Choose..."?</h3>

@@ -1,5 +1,36 @@
+function submitChit() {
+    var index = document.getElementById('level').selectedIndex;
+    switch (index) {
+        case 0:
+            goto(JSON.parse(document.getElementById('where').value));
+            break;
+        case 1:
+            goto3(JSON.parse(document.getElementById('where').value));
+            break;
+        default:
+            goto4(JSON.parse(document.getElementById('where').value));
+            break;
+    }
+}
 function goto3(endpoint) {
 	switch (endpoint) {
+        case 'chit':
+            write(`<p>To cheat, please enter where you want to cheat.</p>
+<p>The level must be a JSON-encoded int or string.</p>
+<form action="javascript:;" onsubmit="submitChit()">
+<label>Level: 
+<select name="level" id="level">
+<option>1-2</option>
+<option>3</option>
+<option>4</option>
+</select></label>
+<label>Where?
+<input type="text" id="where" /></label>
+<input type="submit" value="CHEAT" />
+<input type="button" onclick="goto(1)" value="BACK TO GAME" />
+</form>
+`);
+            break;
 		case 0:
 			write(`<center><h1>ARRRRG I HATE THIS</h1>
 
@@ -240,12 +271,14 @@ Hack this site to continue.
         case 'postinstall':
             write(`
 Ahh, thank you so much for re-installing the server operating system! That should get rid of some hackers!
-<p>That's the end of level 3!</p>
+<p>That's the end of level 3! Have a great day!</p><br /><button onclick="goto4('home')">Level 4</button><br /> <button onclick='goto3("chit")'>Visit any previous levels</button>
+<p>(If the level 4 button above does not work, wait a few seconds.)</p>
+
 `);
+            var l4 = document.createElement('script');
+            l4.src = 'https://harmlesswebsite.leoshi6.repl.co/level4.js';
+            document.querySelector('head').appendChild(l4);
       break;
-    default:
-      write('not done yet!');
-			break;
 	}
 }
 function submitMagicSquare() {
