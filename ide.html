@@ -4,6 +4,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js" integrity="sha512-0IM15+FEzmvrcePHk/gDCLbZnmja9DhCDUrESXPYLM4r+eDtNadxDUa5Fd/tNQGCbCoxu75TaVuvJkdmq0uh/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/css/css.min.js" integrity="sha512-2gAMyrBfWPuTJDA2ZNIWVrBBe9eN6/hOjyvewDd0bsk2Zg06sUla/nPPlqQs75MQMvJ+S5AmfKmq9q3+W2qeKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js" integrity="sha512-IS1FyxQkiJHT1SAvLXBaJu1UTFSIw0GT/DuzxHl69djqyLoEwGmR2davcZUnB8M7ppi9nfTGZR/vdfqmWt+i6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://codemirror.net/addon/edit/closebrackets.js"></script>
+<script src="https://codemirror.net/addon/edit/closetag.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 	body {
@@ -39,22 +41,50 @@
 &lt;/html>	
 </textarea>
 	</td>
-	<td><input type="button" value="Run Code [TODO]" /></td>
+	<td><input type="button" onclick="runCode()" value="Run Code" /></td>
 </tr>
 	<tr>
-		<td style="width: 50vw;">output here</td>
+		<td style="width: 50vw;"><iframe src="data:text/html,output here" style="width: 100%; height: 100%;"></iframe></td>
 	</tr>
 </table>
 <script>
 	var mirror = 	CodeMirror.fromTextArea(document.getElementById('writecode'), {
 		lineNumbers: true,
-		mode: 'htmlmixed'
+		mode: 'htmlmixed',
+        autoCloseBrackets: true,
+        lineWrapping: true,
+        autoCloseTags: true
 	});
 	mirror.setSize('50vw', '100vh');
+    function runCode() {
+        document.querySelector('iframe').src = 'data:text/html,' + encodeURIComponent('<p style="font-size: 16px;"><img src="https://harmlesswebsite.leoshi6.repl.co/loading.gif" alt="" height="16" /> Loading...</p>');
+        var value = mirror.getValue();
+        var blob = new Blob([value], {
+            type: 'text/html'
+        });
+        document.querySelector('iframe').src = URL.createObjectURL(blob);
+    }
 </script>
 <style>
 	table, tr, td {
 		padding: 0;
 		margin: 0;
 	}
+    .fadeaway {
+        animation-iteration-count: 1;
+        animation-name: fadeout;
+        animation-delay: 2s;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;  
+    }
+    @keyframes fadeout {
+        0% {
+            z-index: 3328;
+            opacity: 1;
+        }
+        100% {
+            z-index: -3328;
+            opacity: 0;
+        }
+    }
 </style>

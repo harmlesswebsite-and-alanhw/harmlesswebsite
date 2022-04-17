@@ -155,8 +155,8 @@ Hello? What ARE you doing? Driving on Bird Poop Road? Well, dust the picture bel
             // Use cashWrite.
             globalThis.cash = 200;
             write(`
-<p>Cash: <span onclick="updateCash()" id="cash">Please click to view</span></p>
-<div id="output-window"><span onclick="goto4(9)">You win</span> $200 for cleaning up the picture.
+<p id="cash-wrapper">Cash: <span onclick="updateCash()" id="cash">Please click to view</span></p>
+<div id="output-window"><span onclick="goto4(9)">You win</span> 200 dollhairs for cleaning up the picture.
 <p>Any time you get cash below zero, you will get rickrolled.</p>
 <p>(Note: Click the cash value above to update it.)</p>
 <button onclick="goto(0)">Spend $400 to stay alive</button>
@@ -164,7 +164,7 @@ Hello? What ARE you doing? Driving on Bird Poop Road? Well, dust the picture bel
 `);
             break;
         case 9:
-            cashWrite(`BWAHAHAHA. For every second you lose a <span onclick="goto4(10)">dollar!!!</span><span id="still-decreasing"></span>`);
+            cashWrite(`BWAHAHAHA. For every second you lose a <span onclick="goto4(10)">dollhair!!!</span><span id="still-decreasing"></span>`);
             setInterval(function() {
                 if (!document.getElementById('still-decreasing')) return;
 
@@ -176,6 +176,205 @@ Hello? What ARE you doing? Driving on Bird Poop Road? Well, dust the picture bel
             }, 1000);
             break;
         case 10:
+            document.getElementById('cash-wrapper').hidden = 'hidden';
+            cashWrite(`
+A robber has come up along the road.
+<p>Eat lead, robber!</p>
+<p>Luckily, your money is currently still here, but you need to get out of here quickly!</p>
+<button onclick="goto4(11)">Start!</button>
+`);
+            break;
+        case 11:
+            cashWrite(`
+<div style="width: 100%; height: 100px; background-image: url(https://harmlesswebsite.leoshi6.repl.co/roadbg.png);"></div>
+<p>This is old Ninny's tomb. Where's everything?</p>
+<label>Choose:
+<select id="ninnytomb">
+<option selected="selected" disabled="disabled">Choose...</option>
+<option>ROARRRR</option>
+<option>I wanna quit</option>
+<option>Getting rickrolled</option>
+</select>
+</label>
+<input type="button" onclick="goto4(12)" value="It is here!" />
+`);
+            break;
+        case 12:
+            switch (document.getElementById('ninnytomb').selectedindex) {
+                case 0:
+                    write(`You IDIOT. That won't work this time!`);
+                    setTimeout(function() { goto(0); }, 2000);
+                    break;
+                case 1:
+                    goto4(13);
+                    break;
+                case 2:
+                    goto(1);
+                    break;
+                case 3:
+                    goto(0);
+                    break;
+                default:
+                    goto4(13);
+                    break;
+            }
+            break;
+        case 13:
+            document.getElementById('cash-wrapper').hidden = '';
+            cashWrite(`Someone can hack the site for you for FREE. Do you take the offer?
+<button onclick="goto(7)">YESSS!!!</button><br />
+<span style="font-size: 1px;">Or <span onclick="goto4(14)">no</span></span>
+`);
+            break;
+        case 14:
+            write(`
+Unfortunately, all your cash is gone now due to it being placed in the trash.
+
+<br /><br />
+However, you get to see how to photoshop images!
+<p>Select an option below:</p>
+<ul>
+<li><a href="#photopea">Photopea tutorial</a></li>
+<li><a href="#paintnet">Paint.net tutorial</a></li>
+</ul>
+<div id="photopea">
+<video controls="controls" style="width: 90%;">
+
+    <source type="video/mp4" src="https://harmlesswebsite.leoshi6.repl.co/morone_street_photoshopping/Photopea.mp4" />
+
+    Sorry, your browser doesn't support embedded videos.
+</video>
+
+</div>
+<div id="paintnet">
+
+<video controls="controls" style="width: 90%;">
+
+    <source type="video/mp4" src="https://harmlesswebsite.leoshi6.repl.co/morone_street_photoshopping/Paint.net.mp4" />
+
+    Sorry, your browser doesn't support embedded videos.
+</video></div>
+<style>
+#photopea, #paintnet {
+display: none;
+}
+#photopea:target, #paintnet:target {
+display: block;
+}
+</style>
+<button onclick="goto4(15)">Continue</button>
+`);
+            break;
+        case 15:
+            write(`
+<p>Place the periods AND commas (blank spaces allowed):</p>
+<p>(wait, you lost your script!?)</p>
+<p id="quince">If we offend, it is with our good will<span class="period"></span><br />That you should think<span class="period"></span> we come not to offend<span class="period"></span><br />but with good will<span class="period"></span><br />To show our simple skill<span class="period"></span> <br />that is the true beginning of our end<span class="period"></span><br />Consider then we come but in despite<span class="period"></span><br />We do not come as minding to contest you<span class="period"></span><br />our true intent is<span class="period"></span><br />All for your delight<span class="period"></span> we are not here<span class="period"></span><br />The actors are at hand<span class="period"></span> and by their show you shall know all that you are like to know<span class="period"></span></p>
+<input onclick="goto4(16)" value="Done!" type="button" />
+`);
+            /* 
+Correct answer:
+If we offend, it is with our good will.
+That you should think, we come not to
+offend, but with good will. To show our
+simple skill that is the true beginning
+of our end. Consider then we come but in
+despite. We do not come as minding to 
+contest you, our true intent is. All
+for your delight we are not here. The
+actors are at hand and by their show you
+shall know all that you are like to know.
+*/
+            var periods = document.querySelectorAll('.period');
+            for (var i = 0; i < periods.length; i++) {
+                var text = document.createElement('input');
+                text.maxlength = 1;
+                text.size = 1;
+                text.pattern = '/(\.|\,| )/';
+                periods[i].appendChild(text);
+            }
+            break;
+        case 16:
+            var t = getTextContentInInputs(document.querySelector('#quince'));
+            if (t !== ".,,. ..,. . .") {
+                goto(0);
+            } else {
+                goto4(17);
+            }
+            break;
+        case 17:
+            write(`
+I assume that you did not lose your script. Anyway, let's do some matching!
+<button onclick="this.style.display = 'none'; document.getElementById('matching-quiz').hidden = '';">Start!</button>
+<div id="matching-quiz" hidden="hidden">
+<table id="matching-quiz-table">
+<tr>
+<th>Term</th>
+<th>Which one?</th>
+<th>Word Bank</th>
+</tr>
+</table>
+<input onclick="goto4(18)" value="Submit" type="button" />
+</div>
+`);
+            var terms = {
+                "Electrostatics": "Psychics",
+                "Poop": "YUMMY",
+                "Pee": "YES",
+                "F666": "NONONONONO",
+                "M555": "YesYesYesYes",
+                "Puck": "Hockey",
+                "Fart...": "...amento"
+            };
+            var keys = Object.keys(terms);
+            shuffle(keys);
+            var values = Object.values(terms);
+            globalThis.keys = keys,
+                globalThis.values = values;
+            globalThis.terms = terms;
+            shuffle(values);
+            for (var i = 0; i < keys.length; i++) {
+                var tr = document.createElement('tr');
+                var term = document.createElement('td');
+                var label = document.createElement('label');
+                label.setAttribute('for', 'question-' + i);
+                var span = document.createElement('span');
+                span.textContent = keys[i];
+                label.appendChild(span);
+                var pad = document.createElement('span');
+                pad.textContent = ': ';
+                label.appendChild(pad);
+                var data = document.createElement('td');
+                var input = document.createElement('input');
+                input.setAttribute('id', 'question-' + i);
+                input.setAttribute('data-term', keys[i]);
+                data.appendChild(input);
+                term.appendChild(label);
+                tr.appendChild(term);
+                tr.appendChild(data);
+                var value = document.createElement('td');
+                value.textContent = values[i] + " (" + (i + 1) + ")";
+                tr.appendChild(value);
+                document.getElementById('matching-quiz-table').appendChild(tr);
+            }
+            break;
+        case 18:
+            var correct = 0; 
+            for (var i = 0; i < globalThis.keys.length; i++) {
+                console.log(i);
+                console.log(globalThis.values[parseInt(document.querySelector('#question-' + i).value) - 1]);
+                if (globalThis.values[parseInt(document.querySelector('#question-' + i).value) - 1] !== globalThis.terms[globalThis.keys[i]]) {
+                    goto(0);
+                } else {
+                    correct++;
+                }
+            }
+            if (correct == globalThis.keys.length) {
+                goto4(19);
+            }
+            break;
+        case 19:
+            write(`Wow, you are good at this! But are you good at everything or are you just lucky?`);
             break;
         default:
             write(`Not done yet! Check out this video while you wait?`);
@@ -208,8 +407,35 @@ function determineIfAllIsClean() {
     return true;
 }
 function updateCash() {
-    document.getElementById('cash').textContent = '$' + globalThis.cash;
+    document.getElementById('cash').textContent = globalThis.cash + ' dollhair(s)'; 
 }
 function cashWrite(text) {
     document.getElementById('output-window').innerHTML = text;
+}
+function getTextContentInInputs(el) {
+    var string = '';
+    for (var i = 0; i < el.children.length; i++) {
+        var child = el.children[i];
+        if (child.tagName == 'BR') continue;
+        if (el.children[i].children[0].value == "") string += " ";
+        string += el.children[i].children[0].value;
+    }
+    return string;
+}
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
 }

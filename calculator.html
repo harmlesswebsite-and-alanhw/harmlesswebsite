@@ -1,0 +1,234 @@
+<!-- Unfinished -->
+<!DOCTYPE html>
+<html><head><title>Typing on the calculator</title><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.4.3/math.min.js" integrity="sha512-d6sEP6+azCvTepdAZ2OKY9jkTA7/jnU7seyEF05Dd0QXQuj0dse7smxIYZiKRNRRxhSDJ+aE+/wY57TETmnpVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div id="output" style="word-break:break-all;"></div>
+    <label>
+        Menu:
+        <select onchange="if (this.selectedIndex !== 0) changeMenu(this.options[this.selectedIndex].value); else showAll()">
+            <option selected="selected">Show all</option>
+            <option value="numbers">Numbers and some letters</option>
+            <option value="presets">Pre-set expressions</option>
+            <option value="actions">Actions</option>
+            <option value="tools">Other tools</option>
+            <option value="russian">Cyrillic</option>
+        </select>
+    </label>
+    <div id="buttons">
+        <div id="actions">
+            <form action="javascript:;" method="GET" onsubmit="updateCalcSize(parseInt(document.querySelector('[type=number]').value));">
+            <label>Display size: <input type="number" /></label>
+            <input type="submit" value="Apply" />
+                <input type="button" onclick="updateCalcSize(globalThis.calc.join('').length);document.querySelector('[type=number]').value = globalThis.calc.join('').length" value="Auto" />
+        </form>
+        <button onclick="clearCalc()" class="warn">CLEAR</button>
+     <button onclick="deleteCalc()">DEL</button>
+            <button onclick="addToCalc(' ')">Skip right</button>
+            <button onclick="evaluateExpr()">Evaluate</button>
+        </div>
+        <div id="presets">(Presets:)
+        <br /><button onclick="clearCalc(); addToCalc('D', '0', '0', '5', 'tan(', '.', '1', '5', ')', 'F', 'A', 'tan(');">Doostan is fat</button>
+         <button onclick="clearCalc(); addToCalc('J', 'A', 'sin(', '.', '.', '.', '1', '5', ')', 'F', 'A', 'tan(');">Jasin is fat</button>   
+        </div>
+            <div id="tools">
+        <button onclick="addToCalc('(')">(</button>
+        <button onclick="addToCalc(')')">)</button>
+        <button onclick="addToCalc('sin(')">sin</button>
+        <button onclick="addToCalc('cos(')">cos</button>
+        <button onclick="addToCalc('tan(')">tan</button>
+                                <button onclick="addToCalc('^')">POWER</button>
+<br />
+                <button onclick="addToCalc('|')">ABS</button>
+                <button onclick="addToCalc('.')">.</button>
+        <button onclick="addToCalc('π')">π</button>
+                <button onclick="addToCalc('P')">𝐏</button>
+                <button onclick="addToCalc('C')">𝐂</button>        
+            </div>
+        <div id="russian">
+                            <button onclick="addToCalc('Я')">Я</button>
+                <button onclick="addToCalc('И')">И</button>   
+                            <button onclick="addToCalc('З')">З</button>
+                <button onclick="addToCalc('б')">б</button> 
+                <button onclick="addToCalc('ч')">ч</button> 
+                <button onclick="addToCalc('1ббч')">1ббч</button> 
+                <button onclick="addToCalc('зз28')">зз28</button> 
+        </div>
+        <div id="numbers"></div>
+    </div>
+    <style>
+        code {
+            background-color: greenyellow;
+            margin: 1px;
+            white-space: pre-wrap;
+            font-size: min(50px, 6.25vw);
+        }
+        button {
+            background-color: white;
+            color: black;
+            border: 1px solid;
+            border-radius: 3px;
+            margin: 2px;
+        }
+        button:not(.warn):hover {
+            background-color: #cccccc;
+        }
+        button.warn {
+            color: white; 
+            background-color: red;
+        }
+        button.warn:hover {
+            background-color: #dd0000;
+        }
+        * {
+            font-size: 30px;
+        }
+    </style>
+    <script>
+        globalThis.calcSize = 16;
+
+        window.calc = new Array();
+        function updateCalcSize(size) {
+            globalThis.calcSize = size;
+            var currentCalc = globalThis.calc;
+            globalThis.calc = [];
+            document.getElementById('output').innerHTML = '';
+            for (var i = 0; i < size; i++) {
+                var code = document.createElement('code');
+                code.innerHTML = '&nbsp;';
+                document.getElementById('output').appendChild(code);
+            }
+            addToCalc.apply(null, currentCalc);
+        }
+        function addToCalc(...values) {
+            for (var i = 0; i < values.length; i++) {
+                globalThis.calc.push(values[i]);
+            }
+            var calcSize = globalThis.calcSize;
+            var obj = {};
+            obj.size = calcSize;
+            obj.chars = globalThis.calc;
+            location.hash = '#' + JSON.stringify(obj);
+            var compiledString = globalThis.calc.join('');
+            var j = 0;    
+            for (var j = 0; j < compiledString.length; j++) {
+                if (j >= globalThis.calcSize) {
+                    // Overflow error
+                    document.getElementById('output').children[globalThis.calcSize - 1].textContent = '>';
+                    break;
+                }
+                document.getElementById('output').children[j].textContent = compiledString[j];
+            }
+        }
+        var butts = [];
+        for (var i = 0; i <= 9; i++) butts.push(i);
+        butts = [...butts, "X", "Y", "Z", "A", "B", 'C', "D", "E", "F", "M", "J", "R", "+", "-", "*", '/', '='];
+        for (var i = 0; i < butts.length; i++) {
+            if (butts[i] == 'X' || butts[i] == "+") document.getElementById('numbers').appendChild(document.createElement('br'));
+            var butt = document.createElement('button');
+            butt.setAttribute('onclick', "addToCalc(this.textContent);");
+            butt.textContent = butts[i];
+            document.getElementById('numbers').appendChild(butt);
+        }
+        function clearCalc() {
+            globalThis.calc = [];
+            for (var i = 0; i < globalThis.calcSize; i++) {
+                document.getElementById('output').children[i].textContent = " ";
+            }
+            var calcSize = globalThis.calcSize;
+            var obj = {};
+            obj.size = calcSize;
+            obj.chars = [];
+            location.hash = '#' + JSON.stringify(obj);
+        }
+        function deleteCalc() {
+            globalThis.calc.pop();
+            var ca = globalThis.calc;
+            clearCalc();
+            globalThis.calc = ca;
+            var compiledString = globalThis.calc.join('');
+            var calcSize = globalThis.calcSize;
+            var obj = {};
+            obj.size = calcSize;
+            obj.chars = globalThis.calc;
+            location.hash = '#' + JSON.stringify(obj);
+            var j = 0;    
+            for (var j = 0; j < compiledString.length; j++) {
+                if (j >= globalThis.calcSize) {
+                    // Overflow error
+                    document.getElementById('output').children[globalThis.calcSize - 1].textContent = '>';
+                    break;
+                }
+                document.getElementById('output').children[j].textContent = compiledString[j];
+            }
+        }
+        function changeMenu(thing) {
+            document.getElementById('presets').style.display = 'none';
+            document.getElementById('actions').style.display = 'none';
+            document.getElementById('tools').style.display = 'none';
+            document.getElementById('numbers').style.display = 'none';
+            document.getElementById('russian').style.display = 'none';
+            document.getElementById(thing).style.display = 'block';
+        }
+        function showAll() {
+document.getElementById('presets').style.display = 'block';
+            document.getElementById('actions').style.display = 'block';
+            document.getElementById('tools').style.display = 'block';
+            document.getElementById('numbers').style.display = 'block';
+            document.getElementById('russian').style.display = 'block';
+        }
+        function tryParseJSONObject (jsonString){
+    try {
+        var o = JSON.parse(jsonString);
+
+        // Handle non-exception-throwing cases:
+        // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
+        // but... JSON.parse(null) returns null, and typeof null === "object", 
+        // so we must check for that, too. Thankfully, null is falsey, so this suffices:
+        if (o && typeof o === "object") {
+            return o;
+        }
+    }
+    catch (e) { }
+
+    return false;
+};
+        if (location.hash) {
+            if (tryParseJSONObject(decodeURIComponent(location.hash.slice(1)))) {
+                // Valid object for hash
+                var obj = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+                globalThis.calcSize = obj.size ?? 16;
+            }
+        }
+window.addEventListener('DOMContentLoaded', function() {
+        if (location.hash) {
+            if (tryParseJSONObject(decodeURIComponent(location.hash.slice(1)))) {
+                // Valid object for hash
+                var obj = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+                for (var i = 0; i < obj.chars.length; i++) {
+                    addToCalc(obj.chars[i]);
+                }
+            }
+        }
+});
+        for (var i = 0; i < globalThis.calcSize; i++) {
+            var code = document.createElement('code');
+            code.innerHTML = '&nbsp;';
+            document.getElementById('output').appendChild(code);
+        }
+        document.querySelector('[type=number]').value = globalThis.calcSize;
+        function evaluateExpr() {
+            var oldcalc = globalThis.calc.join("");
+            try {
+                 math.simplify(globalThis.calc.join("")).toString();
+            }
+            catch (e) {
+                alert('Syntax error. Please check your expression for яussiaи, remove it, and try again.');
+                return;
+            }
+            clearCalc();
+             addToCalc(...math.simplify(oldcalc).toString().replace(/ /g, "").split("")); 
+
+        }
+    </script>
