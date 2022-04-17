@@ -940,7 +940,9 @@ function chooseanswer() {
         case "rickroll":
             goto("rick");
             break;
-      
+      case "continue":
+        goto4(22);
+        break;
         default:
             goto(8);
             break;

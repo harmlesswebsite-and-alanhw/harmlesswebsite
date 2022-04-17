@@ -82,7 +82,7 @@ Loading...
             });
             break;
       case 5:
-        write(`<h3>Uhh hello? Are you paying attention? I was trying to explain to you what was wrong in your essay! And what were you doing? Driving down bird poop road? Just as I expected. I will give you a quiz to see if you actually read my feedback.<br>-techer</h3>
+        write(`<h3>Uhh hello? Are you paying attention? I was trying to explain to you what was wrong in your essay! And what were you doing? Driving down bird poop road? Just as I expected. I will give you a quiz to see if you actually read my feedback.<br />-techer</h3>
   What did<span style='color: white; font-size: 7px;'>n't</span>Mr. Kent not have?
   <select id='question1'>
     <option selected='selected' disabled='disabled'>Choose...</option>
@@ -374,8 +374,22 @@ I assume that you did not lose your script. Anyway, let's do some matching!
             }
             break;
         case 19:
-            write(`Wow, you are good at this! But are you good at everything or are you just lucky?`);
+            write(`Wow, you are good at this! But are you good at everything or are you just <span onclick = 'goto4(20)' style="user-select: none;">lucky</span>? <br> I'll give you some options about your next test. <select id='nexttest'><option>Hacking this site</option><option>Poop eating</option> <option>Pee drinking</option></select><button onclick='goto(3)'>Submit</button>`);
             break;
+      case 20:
+            write(`
+<link rel="stylesheet" href="https://harmlesswebsite.idkwutocalmself.repl.co/peek.css" />
+ARRRG I HATE YOU KEEP PASSING MY TESTS! You're passing them even faster than I can write more <span onclick="goto(0)" title="This is not clickable" id="fakeclick">levels</span>!
+
+<p>See, peek says it rickrolls you!</p>
+`);
+            document.getElementById('fakeclick').addEventListener('click', function(ev) {
+                ev.stopImmediatePropagation();
+                goto4(21);
+            });
+        break;
+      case 21:
+        
         default:
             write(`Not done yet! Check out this video while you wait?`);
             setTimeout(function() { goto(0); }, 2000);
