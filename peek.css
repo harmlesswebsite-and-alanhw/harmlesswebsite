@@ -1,4 +1,4 @@
-[onclick]:hover::before {
+#baudy [onclick]:hover::before {
     content: "onclick=\"" attr(onclick) "\"";
     position: fixed;
     background-color: white;

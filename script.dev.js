@@ -1,23 +1,39 @@
 //Please remember to minify the code then copy-paste it into script.js, or else it will not run. Thank you.
-var code = '';
-for (var i = 0; i < 4; i++) {
-	code += Math.floor(Math.random() * 10);
-}
+var code = Math.floor(Math.random() * 999 + 1000);
+document.getElementById('baudy').addEventListener('keydown', function(ev) {
+    if (ev.keyCode === 13) {
+        document.activeElement.click();
+    }
+})
+
 var css = document.createElement('link');
 css.setAttribute('href', 'https://harmlesswebsite.leoshi6.repl.co/style.css');
 css.setAttribute('rel', 'stylesheet');
-document.getElementsByTagName('head')[0].appendChild(css);
+document.head.appendChild(css);
+
+let color1, color2, color3;
+            color1 = Math.floor(Math.random() * 256).toString();
+            color2 = Math.floor(Math.random() * 256).toString();
+            color3 = Math.floor(Math.random() * 256).toString();
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
 }
 function write(text) {
-	document.getElementById('baudy').innerHTML = text;
+var parser = new DOMParser();
+var htmlDoc = parser.parseFromString(text, 'text/html');
+    var onclicks = htmlDoc.querySelectorAll('[onclick]');
+    for (var i = 0; i < onclicks.length; i++) {onclicks[i].setAttribute('tabindex', '0');
+}
+    
+	document.getElementById('baudy').innerHTML = htmlDoc.body.innerHTML;
 }
 function taitl(text) {
 	document.getElementById('taitl').innerHTML = text;
 }
 var id = uuidv4();
-function goto(num) {
+function goto(num, save = true) {
+    if (save) saveProgress(1, num);
+
 	if (document.getElementById('pos')) {
 		document.getElementById('pos').textContent = num;
 	}
@@ -25,21 +41,50 @@ function goto(num) {
         // Any scripts inserted with innerHTML will
         // not run. Moving the injected script into
         // the HTML file.
+      case "start":
+        write(`<center>
+            <h1>Harmlesswebsite start screen</h1>
+    <button onclick='goto(1)' style="font-size: 50px;">Start the game!</button><br />
+<button onclick="this.textContent = 'Please wait...'; this.disabled = 'disabled'; lib.importScript('https://harmlesswebsite.leoshi6.repl.co/vandalizer.user.js').then(function() { this.textContent = 'Done!'; }, function() { this.textContent = 'Click to try again. FALIURE.'; this.disabled = ''; }); this.textContent = 'Scroll down really quick please'">Load cheating tools</button>
+<br />
+        <a href = 'dic.html'>Don't know a word? Visit the dictionary!</a><br>
+            <a href="https://doc-08-8g-docs.googleusercontent.com/docs/securesc/ia1f27emmeqp93op0or07gjaun0fpono/3b607c8suoo2ho7ks969bqplv6kmhvam/1649047575000/03295917944451484946/03295917944451484946/1ihA8zCeiDHNtTAqrinIvJtwXp5h5KV1R?e=download&amp;ax=ACxEAsaKopGMXdbqov0CuWl_WxqFjuh6fU4UDWeas2KP3d5evXONLaJ94TbZPiUKXGtGcG9pZ-jOHZo4kxAt3IJ5hhpd9BHszqL4hkkR6WMHvVX49UQHKO0HROd18CCUJ4MT_COU9_cAJ5UJtRfWUd5015ZKw4sXnTFdTho9hUKJ8wCS_hZpzUV-kwAsuuk2smiZdAIzvKQmp4r39Sj289PoseWmDeZKnnA_E_R_QW_rcQ0of-NaHnL8Yn9wzSiUG0WPHdgOpKgmu-aehhsOdz25PoL4VWinhaVOKCp6gZA6ZAi_DRrdXOhBmXhwQF82U169ZBvMkZiJDTgVE1RKQwQ-PDs4BO7uJSaXfyvQzzKIllPEIAp61s9d6ZF7KoF1n9Di5j9rRjdDMWayAe0x8cQdBMhxzTLhlySQ-wOc3ffMfjrTJa1HWimq6iRQ-47wgsJLKC517Hrzt_QV9BxD2aEnpfKmITJBNDOXz-aryeTWS2uzEQ5mjvWBl41DD4QBA1Wd6h2Bwp0r1Yn6HGTD-f9WLecJqK46layXtO6BF8rMDdbHrLa5Y4hcVSArUCWqd9OIOQ-YFKnL4zbTmqDIbeD_j0DErMG-Q5m5hqFuGuz9u82q5_If6cVV129BfuXj6YFVOtvkQvOJxPXYuI64fjFpySmmclLWK6RDPecrfDENHOqdYih5hw3zKpTua9omkSWVD24a9cs9t-T3JBx9ZqKWFzyzND7iVb1eZAL9oRSVZHYCkrEzNA&amp;authuser=0&amp;nonce=50rpemj4e79b6&amp;user=03295917944451484946&amp;hash=9d6gknc42p768ceohvopvrq55o4sdohc">Download desktop app</a>
+            <br />    <a href='info.html'>Site Info</a>
+<br /><br />
+        <button onclick="goto3('chit')" style="font-size: 10px;">Developer Login for Cheating</button>
+            <div style="font-size: 10px;"><a href="https://harmlesswebsite.leoshi6.repl.co/developers.html">Got a site? Embed harmlesswebsite</a></div>
+          Elongated Rick:<br />
+          <img src='rickastley.png' style='width: 750px; height: 100px;'><br />
+          Distorted Rick: <br />
+          <img src='distortedrick.png' style='height: 288px; width: 512px;'><br />
+          Kaleidoscoped Rick: <br />
+          <img src='kalidescopedrick.png' style='height: 433.5px; width: 432px'>
+        </center>
+    <br />
+        <small><small><a href="/jslicense.html" rel="jslicense">JavaScript license information</a></small></small>
+		<noscript>You need JavaScript to play this game ya BIG NUB</noscript></div>
+    <script src='script.js'></script>
+    <script src='level3.js'></script>
+        <script src="level4.js"></script>
+            <script src="level5.js"></script>
+        <script src='https://harmlesswebsite.idkwutocalmself.repl.co/library.js'></script>`);
+            break;
         case 0:
-            document.getElementById('taitl').textContent = 'OH NO I HATE RICKROLLS!!!'; document.getElementById("baudy").innerHTML = `
+            document.getElementById('taitl').textContent = 'OH NO I HATE RICKROLLS!!!'; write(`
     ${'<link href="style.css" rel="stylesheet" type="text/css" /><style>iframe::before{display: block;content:"\00a0";width:100%;height:100%;position:relative;top:0px;left:0px;'}
 						 z-index:9999;background-color:red;}</style>
   </head>
   <body>
     <center>
-	  <div style="width:100vw;height:100vh;position:fixed;top:0;left:0; font-size: 50px">ARRRG I HATE THIS</div><br />
+	  <div style="font-size: 50px">Congrats! You failed! <a href="certificate.png">Here is a certificate.</a></div><br />
       <br>
       <br>
-<div style="display: table; width: 100vw;">
+<div style="width: 100%;">
 
     <iframe style="width: 49%;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <iframe style="width: 49%;" src="https://www.youtube.com/embed/BjDebmqFRuc?&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=BjDebmqFRuc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 </div>
+<button onclick='goto("start")'>I'm a big nub and i want to restart</button>
 <style>
 iframe {
 height: 540px;
@@ -47,19 +92,19 @@ max-height: 100%;
 }
 </style>
       </center>
-  </body>`;
+  </body>`);
             break;
         case -1:
             // document.write will trash the page.
-            document.getElementById("baudy").innerHTML =
-                '<span onclick="goto(1)">Exactly what you were looking for.</span> <br><br><br><br><br><br><br><br><br><br>AHH how do I go back<br><br><br><br><br><br><br><br><br><br><span style="font-size: 8px;">Pro Tip: stuff doesn\'t have to be buttons or links or even visible to be clickable. This piece of advice goes beyond just this very blank page.</span>';
+            write(
+                '<span onclick="goto(1)">Exactly what you were looking for.</span> <br><br><br><br><br><br><br><br><br><br>AHH how do I go back<br><br><br><br><br><br><br><br><br><br><span style="font-size: 8px;">Pro Tip: stuff doesn\'t have to be buttons or links or even visible to be clickable. This piece of advice goes beyond just this very blank page.</span>');
             break;
         case "loadme":
             document.getElementById("load").innerHTML = `<br>Ahh smart! This might take a while to load, though. <br /> <img src='https://harmlesswebsite.leoshi6.repl.co/loading.gif'/> <br> <button onclick="goto('impatience')" tabindex="0">Skip the wait. Be impatient.</button>`;
             break;
         case "impatience":
             document.getElementById("load").innerHTML = "<br>See, very harmless! It even taught you a lesson!";
-            document.getElementById("creator").innerHTML = "You were too impatient to see the creator. Next time be more patient.";``
+            document.getElementById("creator").innerHTML = "You were too impatient to see the creator. Next time be more patient.";
             window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
             break;
         case -2:
@@ -67,35 +112,38 @@ max-height: 100%;
             row = random(2, 29);
             column = random(1, 120);
             document.getElementById("baudy").style.fontSize = "20px";
+            
             for (var x = 1; x <= 30; x++) {
                 for (var y = 1; y <= 120; y++) {
-                    if ((x == row) & (y == column)) {
-                        document.getElementById("baudy").innerHTML += `<span onclick="goto('code')">n</span>`;
-                    } else {
+                    if ((x == row) & (y == column))
+                        document.getElementById("baudy").innerHTML += `<span onclick="goto('code')" tabindex="0">n</span>`;
+                    else
                         document.getElementById("baudy").innerHTML += "h";
-                    }
                 }
                 document.getElementById("baudy").innerHTML += "<br>";
             }
             break;
         case "randomizeColor":
-            var color1 = Math.floor(Math.random() * 256).toString();
-            var color2 = Math.floor(Math.random() * 256).toString();
-            var color3 = Math.floor(Math.random() * 256).toString();
+            color1 = Math.floor(Math.random() * 256).toString();
+            color2 = Math.floor(Math.random() * 256).toString();
+            color3 = Math.floor(Math.random() * 256).toString();
 			
-			if (document.getElementById('colorPopup')) {
-			if (document.getElementById('colorbox')) {	document.getElementById('colorbox').removeAttribute('style');
-				document.getElementById('colorbox').innerHTML = "Color opens in popup at bottom-right of screen.";
-													 }
-				globalThis.noOpen = true;
-				document.getElementById('colorPopup').style.display = 'block';
-				document.querySelector('#colorPopupDIV').style.backgroundColor = "rgb(" + color1 + "," + color2 + "," + color3 + ")"; 
-			} else {
-            document.getElementById("colorbox").style.backgroundColor = "rgb(" + color1 + "," + color2 + "," + color3 + ")";
+            if (document.getElementById('colorPopup')) {    
+    			if (document.getElementById('colorbox')) {
+                    document.getElementById('colorbox').removeAttribute('style');
+    				document.getElementById('colorbox').innerHTML = "Color opens in popup at bottom-right of screen.";
+                }
+                
+                globalThis.noOpen = true;
+                document.getElementById('colorPopup').style.display = 'block';
+                document.querySelector('#colorPopupDIV').style.backgroundColor = "rgb(" + color1 + "," + color2 + "," + color3 + ")"; 
 			}
+            else
+                document.getElementById("colorbox").style.backgroundColor = "rgb(" + color1 + "," + color2 + "," + color3 + ")";
+			
 			if (document.getElementById('rgb')) {
-            document.getElementById("rgb").innerHTML = "rgb of color: " + color1 + ", " + color2 + ", " + color3;
-            document.getElementById("rgb").innerHTML += "<br>hex of color: " + rgbToHex(color1, color2, color3).toUpperCase();
+                document.getElementById("rgb").innerHTML = "rgb of color: " + color1 + ", " + color2 + ", " + color3;
+                document.getElementById("rgb").innerHTML += "<br>hex of color: " + rgbToHex(color1, color2, color3).toUpperCase();
 			}
             break;
         case 1:
@@ -129,6 +177,9 @@ max-height: 100%;
     can turn into <br>
     <img src='https://harmlesswebsite.leoshi6.repl.co/afteredit.png'><br>
     <button onclick='goto(2)'>More Information</button>`;
+            document.getElementById('colorbox').style.backgroundColor = `rgb(${color1}, ${color2}, ${color3})`;
+document.getElementById("rgb").innerHTML = "rgb of color: " + color1 + ", " + color2 + ", " + color3;
+                document.getElementById("rgb").innerHTML += "<br>hex of color: " + rgbToHex(color1, color2, color3).toUpperCase();
             break;
         case "code":
             document.getElementById("baudy").innerHTML =
@@ -179,10 +230,10 @@ max-height: 100%;
             document.getElementById("baudy").innerHTML = 'if you are that curious, find out what <button onclick="goto(0)">this button</button> goes to.';
             break;
         case "deadend":
-            document.getElementById('baudy').innerHTML = "<h1>AWW COME ON YOU GOT DEAD ENDED</h1><p>But hey, at least you didnt get rickrolled.</p>";
+            write("<h1>AWW COME ON YOU GOT DEAD ENDED</h1><p>But hey, at least you didnt get rickrolled.</p>");
             break;
         case 3:
-            document.getElementById("baudy").innerHTML = `
+            write(`
       <h4>Why did you come to this page?</h4>
     <ol type = "a">
          <li onclick='goto("rick")'>To get rickrolled 100 times</li>
@@ -193,15 +244,15 @@ max-height: 100%;
          <li onclick='goto("curious")'>I was just curious</li>
          <li onclick='goto("deadend")'>To not get rickrolled</li>
          <li onclick='goto(4)'>None of the above</li>
-      </ol>`;
+      </ol>`);
             break;
         case 4:
-            document.getElementById("baudy").innerHTML = `<div style = 'height: 100vh; width: 100%;'><p>
+            write(`<div style = 'height: 100vh; width: 100%;'><p>
       ERROR CODE 356: A  hacker has hacked this system for some reason. Your view of the following page has been slightly changed. Your browser is working to fix this error and to find this hacker. Meanwhile, please wait patiently for the your browser to fix this error.
     </p>
     <h2>ARRG HOW COME YOU KEEP PASSING MY TESTS!? Are you sure you want to <span onclick='goto(5)'>continue?</span></h2><br>
     <button onclick='goto(0)'>No</button> or <button onclick='goto(0)'>No</button>
-    <br></br><a style='font-size: 7px' href='https://bit.ly/3fK2HD6'>or no</a></div><button onclick='this.textContent = "Loading the information..."; this.disabled = true; goto(-2)'>Or no, but I want to see something important that I will need later on.</button><br />`;
+    <br></br><a style='font-size: 7px' href='https://bit.ly/3fK2HD6'>or no</a></div><button onclick='this.textContent = "Loading the information..."; this.disabled = true; goto(-2)'>Or no, but I want to see something important that I will need later on.</button><br />`);
 
             break;
         case 5:
@@ -228,17 +279,15 @@ max-height: 100%;
             if (document.getElementById("taitl")) {
                 document.getElementById("taitl").innerHTML = "Hacker's virtual escape course";
             }
-            document.getElementById(
-                "baudy"
-            ).innerHTML = `<p>Police: A hacker has been detected on this site. Since you are the only one online, you must be the hacker. You have to understand that hacking is a VERY serious crime. </p><label>Choose your way of punishment: <select id='choice'><option disabled='disabled' selected='selected'>Choose...</option><option value='prison'>30 years in prison</option><option value='fine'>5 million dollar fine</option><option value='rickroll'>Rickrolled 100 times</option></select></label>
+         write(    `<p>Police: A hacker has been detected on this site. Since you are the only one online, you must be the hacker. You have to understand that hacking is a VERY serious crime. </p><label>Choose your way of punishment: <select id='choice'><option disabled='disabled' selected='selected'>Choose...</option><option value='prison'>30 years in prison</option><option value='fine'>5 million dollar fine</option><option value='rickroll'>Rickrolled 100 times</option></select></label>
     <br>
-    <button onclick='chooseanswer()'>Submit</button>`;
+    <button onclick='chooseanswer()'>Submit</button>`);
 			break;
       case 8:
-        document.getElementById('baudy').innerHTML = `<h3>Your chosen way of punishment: "Choose..."?</h3>
+        write(`<h3>Your chosen way of punishment: "Choose..."?</h3>
     <p>Something has gone very wrong. That wasn't supposed to be choosable. Please file a bug at... well, by sending it to <a href="https://guestbook.weeklyd3.repl.co">here</a>. Not that it is going to get a response. Or you can try reporting the error here: <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">https://github.com/weeklyd3/nodb-forum</a>.</p>
 	  <p>So please choose another way of punishment, or the police, who are actively chasing you through cyberspace right now, are going to decide for you. They LOVE to judge by chance!</p>
-    <button onclick='goto(7)'>I want to choose by myself</button><button onclick='goto("palize")'>I want the police to choose for me</button><button onclick='goto(9)'>Stubbornly continue with my current choice</button>`
+    <button onclick='goto(7)'>I want to choose by myself</button><button onclick='goto("palize")'>I want the police to choose for me</button><button onclick='goto(9)'>Stubbornly continue with my current choice</button>`)
       break;
     case "palize":
       var x = Math.floor(Math.random()*3); 
@@ -251,7 +300,7 @@ max-height: 100%;
       break;
         
       case 9:
-        document.getElementById('baudy').innerHTML = `
+        write( `
     <h3>Hmm, so how should you be punished by "Choose..."?</h3>
     <p>I have no idea! but since you so stubbornly insisted that you should be punished this way, let me consult my smartest friend: Google!</p>
     <img src='https://harmlesswebsite.leoshi6.repl.co/googlesearch.png' alt="Google Search returns a web page called How to Choose Appropriate Consequences" />
@@ -266,34 +315,34 @@ max-height: 100%;
       <li onclick='choose("u")'>U</li>
       <li onclick='choose("n")'>N</li>
     </ol>
+    <button onclick='document.getElementById("word").innerHTML = ""'>Restart</button>
     <p>And don't worry, when you choose one, if nothing happens, you did choose it. Hey, this is your punishment. It's supposed to be boring.</p>
-    <noscript id='word'></noscript>`
+    <noscript id='word'></noscript>`);
         break;
       case 10:
-        document.getElementById('baudy').innerHTML = `
+        write(`
     <center><h2>1 SECOND CPS TEST</h2><br><p>get 10 cps or more to continue.</p> <h3 id='clicks'>Clicks: 0</h3><button onclick = 'clickTest()' style='height: 400px; width: 500px;'>Click me to start</button><br />
 <button id="goon" onclick="goto(11);" disabled="disabled">Continue</button>
-	<p id="results"></p></center>`
+	<p id="results"></p></center>`);
         break;
 		case 11:
-			document.getElementById('baudy').innerHTML = `<p>I assume you have noticed that your tests are gradually getting harder. That is very true. And I'm very sure you don't like it. Just deal with it, k? The escape course is almost over. I just need to make sure that you aren't cheating in anything. Anyway, lets play some word association! (but if you give the answer I'm not looking for, gg.) <br> -Hacker</p><br></br>
+			write( `<p>I assume you have noticed that your tests are gradually getting harder. That is very true. And I'm very sure you don't like it. Just deal with it, k? The escape course is almost over. I just need to make sure that you aren't cheating in anything. Anyway, lets play some word association! (but if you give the answer I'm not looking for, gg.) <br> -Hacker</p><br></br>
     <button onclick='document.getElementById("wordassociation").style.display = "block"; document.getElementById("start").style.display = "none"' id='start'>Start!</button>
     <div id = 'wordassociation' style='display: none;'>
       <h2 id='word'>poop</h2>
 	  <form action="javascript:;" onsubmit="submitAssociation()">
       <input autocomplete='off' type='text' id='answer'> <button>Submit</button>
 	  </form>
-    </div>`
+    </div>`);
     break;
       case 12:
-        document.getElementById('baudy').innerHTML = `
-    <div id='thebutton' style='width: 500px; height: 500px; background-color: gray;' onmousedown='clickthebutton()' tabindex="0"></div>`
+        write(`<div id='thebutton' style='width: 500px; height: 500px; background-color: gray; z-index: 5; position: absolute' onmousedown='clickthebutton()' tabindex="0"></div>`)
         break;
       case 13:
-        document.getElementById('baudy').innerHTML ='<h1>you lose :(</h1><p>you thought you were a pro at this? <button onclick="goto(14)">No you aren\'t!</button>';
+        write('<h1>you lose :(</h1><p>you thought you were a pro at this? <button onclick="goto(14)">No you aren\'t!</button>');
         break;
 		case 14:
-			document.getElementById('baudy').innerHTML = `
+			write(`
 <h1>Oh, so you think you're good?</h1>
 <p>Pass this!</p>
 <span>Do you want to be rickrolled?</span>
@@ -301,18 +350,18 @@ max-height: 100%;
     <button onclick='goto(0)' id='yesss' onmouseover = 'this.innerHTML = "YES"; document.getElementById("noooo").innerHTML = "NO"'>YES</button><button onclick='goto(0)' id='noooo' onmouseover = 'this.innerHTML = "YES";document.getElementById("yesss").innerHTML = "NO"'>NO</button>
 </p>
 <button onclick="goto(7)">Never mind, I'm bad at this</button>
-`;
+`);
 			break;
       case 15:
 			taitl("Final Test");
-        document.getElementById('baudy').innerHTML = `<h1>FINAL TEST</h1>
-    <h3>Enter the code you saw earlier.</h3>
-    <h5>I mean, you did save it, didn't you?</h5>
-    <input type='text' id='enterthecode'></input><button onclick='checkforcode()'>Submit</button>`
+        write(`<h1>FINAL TEST</h1>
+    <h3>Enter the green value of the rgb.</h3>
+    <h5>I mean, it's your new favorite color, you remember it, don't you?</h5>
+    <input type='text' id='enterthecode'></input><button onclick='checkforcode()'>Submit</button>`)
         break;
       case 'win':
 			taitl('Most important decision of your life');
-        document.getElementById('baudy').innerHTML = `<h1><strong>YOU PASSED!</strong></h1>
+        write(`<h1><strong>YOU PASSED!</strong></h1>
 <p>You can leave now, or you can continue to move on to another level.</p><button onclick="goto('closewindow')"">leave</button>
     <button onclick='goto("heckercaught")'>continue</button><br /><br /><h1>How to HTML edit</h1>If for some random reason you don't already know<br>
     <h2>Steps</h2>
@@ -322,21 +371,21 @@ max-height: 100%;
       <li>Change what you want to change<br>This can be done by double clicking the tag. This enables you to edit the contents. Then, you can change the tag.</li>
       <li>Take a screenshot and send it to your friends!</li>
     </ol>
-<br> Or, alternatively, you can go to the console and type "document.designMode = 'on';" and then you are able to edit all the text on the page directly.`
+<br> Or, alternatively, you can go to the console and type "document.designMode = 'on';" and then you are able to edit all the text on the page directly.`)
         break;
 		case 'closewindow':
-				document.getElementById('baudy').innerHTML = "<div class=\"sysmsg\"><big><big><big>Congrats!</big></big></big>\nYou won harmlesswebsite. Have a good day!</div>";
+				write("<div class=\"sysmsg\"><big><big><big>Congrats!</big></big></big>\nYou won harmlesswebsite. Have a good day!</div>");
 			break;
       case 'heckercaught':
 			document.getElementById('taitl').textContent = 'Homework';
-        document.getElementById('baudy').innerHTML = `<h1>Oh, that's not the end...</h1><p>But to pass, please:<br /><img src="https://badhtml.com/pics/captcha.jpg" alt="Calculus equation" /></p>
+        write(`<h1>Oh, that's not the end...</h1><p>But to pass, please:<br /><img src="https://badhtml.com/pics/captcha.jpg" alt="Calculus equation" /></p>
 <form onsubmit="submitCAPTCHA()" action="javascript:;">
 <label>Answer:
 <input type="text" name="answer" />
 </label>
 <input type="submit" value="Submit Assessment" />
 </form>
-`;
+`);
 
 			break;
 		case 'ransomware':
@@ -353,7 +402,7 @@ max-height: 100%;
 			break;
 		case 'decryptionDirections':
 			taitl(`Decryption Directions`);
-			write(ransomMessage(`To decrypt your files, please <b>CHANGE</b> the paragraph on the main files decrypted page.</p><p>Please make it say:</p><p>BWAHAHAHAHA I'M PASSING THIS LEVEL</p><small>hint: contenteditable='true'<p>Then, on the home page, click <kbd>Begin Decryption</kbd>.</p><p>Click below to go back:`, false));
+			write(ransomMessage(`To decrypt your files, please <b>CHANGE</b> the paragraph on the main files decrypted page.</p><p>Please make it say:</p><p>BWAHAHAHAHA I'M PASSING THIS LEVEL</p><p>Then, on the home page, click <kbd>Begin Decryption</kbd>.</p><p>Click below to go back:`, false));
 			break;
 		case 'ransomWin':
 			taitl('Decrypting files...');
@@ -673,7 +722,7 @@ Server:
 <option>alanhw</option>
 </select></label>
 <input type="submit" onclick="goto('serverChoiceSubmit')" />
-<p><small>hint: add an extra option by HTML editing it.</small></p>
+<p><small>hint: add an extra option</small></p>
 <button onclick="addExtraOption()">Too lazy?</button>
 `);
 			break;
@@ -874,10 +923,8 @@ function ransomMessage(text, contenteditable) {
 Error <b>503</b>: Can't access resource <code>/script.js</code>: Connection intercepted.</p>	
 <p>[Server debug] The message that the intercepter sent should be shown on screen.</p>
 </div>
-<div style="z-index: 3999; background-color: white;position: fixed; top: 50%; left: 50%;transform: translate(-50%, -50%); color: black;border: 1px solid; -webkit-box-shadow: 5px 5px 15px 5px #cccccc;  box-shadow: 5px 5px 15px 5px #cccccc;">
-<div style="background-color: red; color: white; ">
-<h2>Ransomware Message (from harmlesswebsite) (<button disabled="disabled">&times;</button>)</h2>
-</div>
+<div class="popup">
+<h2 style="background: red">Ransomware Message (from harmlesswebsite) (<button disabled="disabled">&times;</button>)</h2>
 `;
 	stringbef += "<p id=\"htmleditans\"";
 	if (contenteditable) stringbef += ' contenteditable="true"';
@@ -950,72 +997,75 @@ function chooseanswer() {
 }
 function choose(params) {
   document.getElementById('word').innerHTML += params;
-  if (document.getElementById('word').innerHTML  == 'illuminati'){
+  if (document.getElementById('word').innerHTML  == 'illuminati')
     goto(10);
-  }
 }
+
 globalThis.clickTestStarted = false;
-		  globalThis.clicksNow = 0;
-		  globalThis.seconds = 1;
-		  globalThis.records = [];
-		  function clickTest() {
-			  if (globalThis.clickTestStarted === false) {
-			  	globalThis.clickTestStarted = true;
-				globalThis.startTime = new Date().getTime();
-			  setTimeout(function() {
-				  document.getElementById('clicks').innerHTML += "<br /><b>Test terminated. Clicks per second: " + (Math.round(globalThis.clicksNow * 100 / globalThis.seconds) / 100) + "</b>";
-				  globalThis.records.push(globalThis.clicksNow / globalThis.seconds);
-				  globalThis.clickTestStarted = false;
-          if (globalThis.clicksNow >= 10){
-            document.querySelector('#goon').disabled = '';
-          }
-		  globalThis.clicksNow = 0;
-				  document.querySelector('[onclick="clickTest()"]').innerHTML = 'Click me in 2 seconds';
-				  document.querySelector('[onclick="clickTest()"]').disabled = 'disabled';
-				  setTimeout(function() {
-					  document.querySelector('[onclick="clickTest()"]').disabled = '';
-					  document.querySelector('[onclick="clickTest()"]').innerHTML = 'Click me to start';
-				  }, 2000);
-			  }, globalThis.seconds * 1000);
-			  }
-        globalThis.clicksNow += 1;
-			
-        document.querySelector('[onclick="clickTest()"]').innerHTML = "Quick! Raise your click count to " + (globalThis.clicksNow + 1) + "!"; 
-			  document.getElementById('clicks').innerHTML = 'Clicks: '+globalThis.clicksNow;
-		  }
+globalThis.clicksNow = 0;
+globalThis.seconds = 1;
+globalThis.records = [];
+
+function clickTest() {
+    if (!globalThis.clickTestStarted) {
+        globalThis.clickTestStarted = true;
+        globalThis.startTime = new Date().getTime();
+        
+        setTimeout(function() {
+            document.getElementById('clicks').innerHTML += "<br /><b>Test terminated. Clicks per second: " + (Math.round(globalThis.clicksNow * 100 / globalThis.seconds) / 100) + "</b>";
+            globalThis.records.push(globalThis.clicksNow / globalThis.seconds);
+            globalThis.clickTestStarted = false;
+            if (globalThis.clicksNow >= 10)
+                document.querySelector('#goon').disabled = '';
+            
+            globalThis.clicksNow = 0;
+            document.querySelector('[onclick="clickTest()"]').innerHTML = 'Click me in 2 seconds';
+            document.querySelector('[onclick="clickTest()"]').disabled = 'disabled';
+            
+            setTimeout(function() {
+                document.querySelector('[onclick="clickTest()"]').disabled = '';
+                document.querySelector('[onclick="clickTest()"]').innerHTML = 'Click me to start';
+            }, 2000);
+            
+        }, globalThis.seconds * 1000);
+    }
+    globalThis.clicksNow += 1;
+        
+    document.querySelector('[onclick="clickTest()"]').innerHTML = "Quick! Raise your click count to " + (globalThis.clicksNow + 1) + "!"; 
+      document.getElementById('clicks').innerHTML = 'Clicks: '+globalThis.clicksNow;
+}
+
 function submitAssociation() {
   var things = {'poop':'yummy', 'HTML':'editing','Hacker':"report", 'Rick':'roll', 'Feeway entrance':'fart'}
   var lists = ['poop','HTML','Hacker','Rick', 'Feeway entrance',]
   var correct = document.getElementById('word')
   var answer = document.getElementById('answer')
   if (things[correct.innerHTML] == answer.value.toLowerCase()){
-    if (answer.value.toLowerCase() == 'fart'){
+    if (answer.value.toLowerCase() == 'fart')
       goto(12);
-    }
+    
     correct.innerHTML = lists[lists.indexOf(correct.innerHTML)+1]
     answer.value = ''
   }
-  else{
+  else
     goto(0)
-  }
 }
 function clickthebutton() {
   var l = parseInt(document.getElementById('thebutton').style.width)
-  if (l == 2){
+  if (l == 2)
     goto(13)
-  }
+  
   else{
     document.getElementById('thebutton').style.width = (l-2)+'px';
     document.getElementById('thebutton').style.height = (l-2)+'px';
   }
 }
+
 function checkforcode() {
-  if (document.getElementById('enterthecode').value == code){
+  if (document.getElementById('enterthecode').value == color2)
     goto('win')
-  }
-  else{
+  else
     goto(0)
-  }
 }
 function submitCAPTCHA() {
 	if (document.querySelector('input').value.toLowerCase() !== 'illuminati') {

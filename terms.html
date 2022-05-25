@@ -1,0 +1,81 @@
+<!-- Unfinished -->
+<!DOCTYPE html>
+<html><head><title>Terms</title><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.4.3/math.min.js" integrity="sha512-d6sEP6+azCvTepdAZ2OKY9jkTA7/jnU7seyEF05Dd0QXQuj0dse7smxIYZiKRNRRxhSDJ+aE+/wY57TETmnpVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <h1>Terms of Use</h1>
+    <p>The rules are simple:</p>
+    <ol>
+        <li>Don't be a jerk</li>
+        <li>Don't be a snap, crackle, or pop either.</li>
+        <li>Don't be a <b>poop</b> either.</li>
+    </ol>
+    <label for="input">Now execute some JS to get going:</label>
+        <pre id="terminal-output">Running on useragent:<br /><script>document.write(navigator.userAgent); </script></pre>
+    <textarea id="input" onkeyup="pr(event)" onmouseup="pr(event)" rows="2" style="padding: 3px; border: 1px solid #cccccc; outline: none; width: 100%;"></textarea>
+    </label>
+    <script src="script.js"></script>
+    <script src="library.js"></script>
+    <script src="level3.js"></script>
+    <script src="level4.js"></script>
+    <script>
+        function pr(ev) {
+            if (ev.currentTarget.selectionStart == 0) {
+                ev.preventDefault();
+                ev.currentTarget.selectionStart = 1;
+            }
+            if (!ev.currentTarget.value.startsWith('>')) {
+                ev.preventDefault();
+                ev.currentTarget.value = '>' + ev.currentTarget.value;
+            }
+            if (ev.keyCode === 13 && !ev.shiftKey) {
+                var cmd = document.createElement('div');
+                var promptSpan = document.createElement('span');
+                promptSpan.textContent = '>> ';
+                promptSpan.classList.add('prompt');
+                var cmdSpan = document.createElement('span');
+                cmdSpan.textContent = ev.currentTarget.value.slice(1);
+                cmd.appendChild(promptSpan);
+                cmd.appendChild(cmdSpan);
+                document.getElementById('terminal-output').appendChild(cmd);
+                var output = document.createElement('div');
+                var morePrompt = document.createElement('span');
+                morePrompt.textContent = '<< ';
+                morePrompt.classList.add('prompt');
+                output.appendChild(morePrompt);
+                var res = document.createElement('span');
+                try {
+                    res.textContent = JSON.stringify(new Function(ev.currentTarget.value.slice(1))());
+                } catch (e) {
+                    res.textContent = 'ERROR: ' + e.name + "\n" + e.toString() + `\n  @file '${e.fileName}', line ${e.lineNumber}\nStack trace:\n${e.stack}`;
+                    res.classList.add('error');
+                }
+                output.appendChild(res);
+                document.getElementById('terminal-output').appendChild(output);
+                ev.currentTarget.value = '>';
+            }
+        }
+    </script>
+    <a rel="jslicense" href="jslicense.html">Javascript license information</a>
+    <style>
+        .prompt {
+            color: #cccccc;
+        }
+        .error {
+            background-color: pink;
+            color: red;
+        }
+    </style>
+    <div id="output" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: none;">
+        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75%; height: 75%; background-color: white; overflow: scroll;">
+            <div style="font-weight: 700; font-size: 20px;" id="taitl">A very harmless website</div>
+            <div id="baudy"></div>
+        </div>
+    </div>
+    <script>
+        document.onkeydown = function(ev) {
+            if (ev.keyCode == 27 && document.getElementById('output').style.display == 'block') { document.getElementById('output').style.display = 'none';
+            }
+        }
+    </script>

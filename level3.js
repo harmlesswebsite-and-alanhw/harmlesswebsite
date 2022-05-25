@@ -7,12 +7,16 @@ function submitChit() {
         case 1:
             goto3(JSON.parse(document.getElementById('where').value));
             break;
-        default:
+        case 2:
             goto4(JSON.parse(document.getElementById('where').value));
             break;
+        case 3:
+            goto5(JSON.parse(document.getElementById('where').value));
+            break
     }
 }
-function goto3(endpoint) {
+function goto3(endpoint, save = true) {
+    if (save) saveProgress(3, endpoint);
 	switch (endpoint) {
         case 'chit':
             write(`<p>To cheat, please enter where you want to cheat.</p>
@@ -23,6 +27,7 @@ function goto3(endpoint) {
 <option>1-2</option>
 <option>3</option>
 <option>4</option>
+<option>5</option>
 </select></label>
 <label>Where?
 <input type="text" id="where" /></label>

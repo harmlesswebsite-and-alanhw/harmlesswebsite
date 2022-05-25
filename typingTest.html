@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html id='stuff'>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title id='taitl'>Typing test</title>
+      <meta name="google-site-verification" content="rxU_MqzKM1omI-d0jbR8BiLvCtsS88CKiqGechKZCDQ" />
+      <link rel="canonical" href="https://harmlesswebsite.leoshi6.repl.co" />
+  </head>
+	<body id="baudy">
+        <h1>Typing test!</h1>
+        <p>Words: <span id="wordlist"><i>Loading...</i></span></p>
+        <p>Or in a more human readable format:</p>
+        <details>
+<summary>Show</summary>
+            <span id="wordlist2">Loading...</span>
+        </details>
+        <button onclick="this.hidden = 'hidden'; document.getElementById('test').hidden = ''; globalThis.started = true; start();" id="start" disabled="disabled">Loading words...</button>
+        <div id="test" hidden="hidden">
+            <label>
+                Type here:<br />
+                <input id="typehere" style="padding: 14px; border-bottom: 6px solid lightgray; border-radius: 14px; font-size: 35px; outline: none; width: 100%; text-align: center;" />
+            </label><br />
+            <div style="text-align: center; font-size: 40px;">
+                Score: <span id="score">0</span>, <span id="seconds">60</span> seconds left<br />
+               <meter id="secondsbar"
+       min="0" max="60"
+       low="20" high="40" optimum="60"
+       value="60" style="width: 100%;"></meter>
+            </div>
+        </div>
+        <div id="results" hidden="hidden">
+            Congrats! You scored <span id="finalscore">$SCORE</span> word<span id="plural">s</span> per minute!
+        </div>
+        <script>
+            function endGame() {
+                clearInterval(globalThis.i);
+                var score = globalThis.score;
+                document.getElementById('finalscore').textContent = globalThis.score;
+                if (globalThis.score - 1 === 0) document.getElementById('plural').hidden = 'hidden';
+                globalThis.secondsLeft = 60;
+                document.getElementById('results').hidden = '';
+                document.getElementById('test').hidden = 'hidden';
+                document.getElementById('start').hidden = '';
+                globalThis.score = 0;
+                document.querySelector('#typehere').value = '';
+                globalThis.started = false;
+            }
+            fetch('https://harmlesswebsite.leoshi6.repl.co/typingTestWords.json')
+            .then(function(res) {
+                return res.json();
+            })
+            .then(function(words) {
+                document.getElementById('wordlist2').textContent = words.join(', ');
+                words = [...new Set(words)];
+                document.getElementById('wordlist').textContent = words.join(', ');
+                globalThis.words = words;
+                document.getElementById('start').disabled = '';
+                document.getElementById('start').textContent = 'Start the test!';
+            })
+            .catch(function(err) {
+                document.body.textContent = 'An error occurred. Please try again.';
+            });
+            function start() {
+                document.getElementById('typehere').focus();
+
+                globalThis.i = setInterval(function() {
+                    if (!globalThis.started) return globalThis.secondsLeft = undefined;
+                    if (!globalThis.secondsLeft) globalThis.secondsLeft = 60;
+                    globalThis.secondsLeft -= 0.1;
+                    globalThis.secondsLeft = Math.round(globalThis.secondsLeft * 10) / 10;
+                    document.getElementById('seconds').textContent = Math.round(secondsLeft);
+                    document.getElementById('secondsbar').value = secondsLeft;
+                    if (!secondsLeft) endGame();
+                }, 100);
+                document.querySelector('#typehere').addEventListener('keydown', function(ev) {
+                    if (ev.keyCode === 32 || ev.keyCode === 13) {
+                        ev.preventDefault();
+                        var word = this.value;
+                        this.value = '';
+                        if (words.indexOf(word.toLowerCase()) === -1) {
+                            globalThis.score--;
+                            document.getElementById('score').textContent = score;
+                            return;
+                        }
+                        globalThis.score++;
+                        document.getElementById('score').textContent = globalThis.score;
+                    }
+                });
+                globalThis.score = 0;
+            }
+        </script>

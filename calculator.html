@@ -26,11 +26,12 @@
         <button onclick="clearCalc()" class="warn">CLEAR</button>
      <button onclick="deleteCalc()">DEL</button>
             <button onclick="addToCalc(' ')">Skip right</button>
-            <button onclick="evaluateExpr()">Evaluate</button>
+            <button onclick="evaluateExpr()">Simplify</button>
         </div>
         <div id="presets">(Presets:)
         <br /><button onclick="clearCalc(); addToCalc('D', '0', '0', '5', 'tan(', '.', '1', '5', ')', 'F', 'A', 'tan(');">Doostan is fat</button>
          <button onclick="clearCalc(); addToCalc('J', 'A', 'sin(', '.', '.', '.', '1', '5', ')', 'F', 'A', 'tan(');">Jasin is fat</button>   
+            <button onclick="clearCalc(); addToCalc('A','|','.','|','5','tan(','1','5',')','F','A','tan(')">Austan is fat</button>
         </div>
             <div id="tools">
         <button onclick="addToCalc('(')">(</button>
@@ -38,10 +39,13 @@
         <button onclick="addToCalc('sin(')">sin</button>
         <button onclick="addToCalc('cos(')">cos</button>
         <button onclick="addToCalc('tan(')">tan</button>
+                <button onclick="addToCalc('pol(')">POL</button>
+                <button onclick="addToCalc('rec(')">REC</button>
                                 <button onclick="addToCalc('^')">POWER</button>
 <br />
                 <button onclick="addToCalc('|')">ABS</button>
                 <button onclick="addToCalc('.')">.</button>
+                <button onclick="addToCalc(',')">,</button>
         <button onclick="addToCalc('π')">π</button>
                 <button onclick="addToCalc('P')">𝐏</button>
                 <button onclick="addToCalc('C')">𝐂</button>        
@@ -123,7 +127,7 @@
         }
         var butts = [];
         for (var i = 0; i <= 9; i++) butts.push(i);
-        butts = [...butts, "X", "Y", "Z", "A", "B", 'C', "D", "E", "F", "M", "J", "R", "+", "-", "*", '/', '='];
+        butts = [...butts, "X", "Y", "Z", "A", "B", 'C', "D", "E", "F", "M", "J", "/R", "+", "-", "*", '/', '='];
         for (var i = 0; i < butts.length; i++) {
             if (butts[i] == 'X' || butts[i] == "+") document.getElementById('numbers').appendChild(document.createElement('br'));
             var butt = document.createElement('button');
